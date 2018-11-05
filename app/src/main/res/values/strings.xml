@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">ApiVoyage</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name">Voyage de rêve</string>
+    <string name="navigation_drawer_open">Ouvrir le menu</string>
+    <string name="navigation_drawer_close">Fermer le menu</string>
+    <string name="nav_header_title">Voyage de rêve</string>
+    <string name="nav_header_subtitle">github.com/IIA-VolService/ApiVoyage</string>
+    <string name="nav_header_desc">Menu</string>
+    <string name="action_settings">Paramètres</string>
 </resources>
