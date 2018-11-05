@@ -11,7 +11,48 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
         android:background="@drawable/wallpaper"
-        />
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/app_name"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="40sp"
+                android:layout_margin="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:layout_margin="50dp"
+                android:text="Bienvenue sur votre application de réservation de vols.\n\nBesoin d'un hôtel ou d'une voiture?"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="22sp"/>
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:layout_margin="30dp"
+                android:text="Voyage de rêve vous aide à combler tout vos besoins pour vous offrir les vacances dont vous rêvez au meilleur prix!"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="22sp"/>
+        </LinearLayout>
+
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>
