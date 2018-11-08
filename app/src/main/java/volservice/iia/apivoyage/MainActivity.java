@@ -1,5 +1,6 @@
 package volservice.iia.apivoyage;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -69,15 +70,21 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_flight) {
+            Intent intentApp = new Intent(getApplicationContext(), FlightActivity.class);
+            getApplicationContext().startActivity(intentApp);
             // Handle the camera action
         } else if (id == R.id.nav_hostel) {
-
+            Intent intentApp = new Intent(getApplicationContext(), HostelActivity.class);
+            getApplicationContext().startActivity(intentApp);
         } else if (id == R.id.nav_rent_a_car) {
-
+            Intent intentApp = new Intent(getApplicationContext(), RentACarActivity.class);
+            getApplicationContext().startActivity(intentApp);
         } else if (id == R.id.nav_settings) {
-
+            Intent intentApp = new Intent(getApplicationContext(), SettingsActivity.class);
+            getApplicationContext().startActivity(intentApp);
         } else if (id == R.id.nav_contact) {
-
+            Intent intentApp = new Intent(getApplicationContext(), ContactActivity.class);
+            getApplicationContext().startActivity(intentApp);
         }
 
 
