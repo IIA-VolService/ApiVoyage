@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -70,19 +72,29 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        // On récupère le nouveau fragment
         Fragment fragment = null;
 
         if (id == R.id.nav_flight) {
+            fragment = new FlightFragment();
         } else if (id == R.id.nav_hostel) {
+            fragment = new HostelFragment();
         } else if (id == R.id.nav_rent_a_car) {
+            fragment = new RentACarFragment();
         } else if (id == R.id.nav_settings) {
+            fragment = new SettingsFragment();
         } else if (id == R.id.nav_contact) {
+            fragment = new ContactFragment();
         }
 
-        if (fragment != null){
+        if (fragment != null) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
 
+            ft.replace(R.id.screenArea, fragment);
+
+            ft.commit();
         }
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
