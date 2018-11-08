@@ -1,4 +1,4 @@
-package volservice.iia.apivoyage;
+package volservice.iia.apivoyage.fragments;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import volservice.iia.apivoyage.R;
 
 public class ContactFragment extends Fragment {
 

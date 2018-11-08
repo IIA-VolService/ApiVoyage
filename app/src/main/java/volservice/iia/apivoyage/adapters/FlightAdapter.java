@@ -1,4 +1,4 @@
-package volservice.iia.apivoyage.adapter;
+package volservice.iia.apivoyage.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;

@@ -1,6 +1,5 @@
 package volservice.iia.apivoyage;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -12,6 +11,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import volservice.iia.apivoyage.fragments.ContactFragment;
+import volservice.iia.apivoyage.fragments.FlightFragment;
+import volservice.iia.apivoyage.fragments.HelpFragment;
+import volservice.iia.apivoyage.fragments.HostelFragment;
+import volservice.iia.apivoyage.fragments.RentACarFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
