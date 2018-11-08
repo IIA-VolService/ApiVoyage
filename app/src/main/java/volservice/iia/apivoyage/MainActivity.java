@@ -3,6 +3,7 @@ package volservice.iia.apivoyage;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -69,22 +70,17 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        Fragment fragment = null;
+
         if (id == R.id.nav_flight) {
-            Intent intentApp = new Intent(getApplicationContext(), FlightActivity.class);
-            getApplicationContext().startActivity(intentApp);
-            // Handle the camera action
         } else if (id == R.id.nav_hostel) {
-            Intent intentApp = new Intent(getApplicationContext(), HostelActivity.class);
-            getApplicationContext().startActivity(intentApp);
         } else if (id == R.id.nav_rent_a_car) {
-            Intent intentApp = new Intent(getApplicationContext(), RentACarActivity.class);
-            getApplicationContext().startActivity(intentApp);
         } else if (id == R.id.nav_settings) {
-            Intent intentApp = new Intent(getApplicationContext(), SettingsActivity.class);
-            getApplicationContext().startActivity(intentApp);
         } else if (id == R.id.nav_contact) {
-            Intent intentApp = new Intent(getApplicationContext(), ContactActivity.class);
-            getApplicationContext().startActivity(intentApp);
+        }
+
+        if (fragment != null){
+
         }
 
 
