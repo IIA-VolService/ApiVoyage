@@ -99,9 +99,4 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-    public FragmentManager getMainFrgManager() {
-        return getSupportFragmentManager();
-    }
-
 }

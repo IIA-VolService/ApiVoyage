@@ -16,7 +16,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:padding="10dp"
-            android:text="Vols disponibles"
+            android:text="@string/txt_flight_list_title"
             android:textAlignment="center"
             android:textColor="@color/colorAccentDark"
             android:textSize="34sp"
@@ -45,7 +45,7 @@
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:background="@color/colorAccent"
-                android:text="Retour" />
+                android:text="@string/txt_flight_btn_back" />
 
             <Button
                 android:id="@+id/list_accept"
@@ -54,7 +54,7 @@
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:background="@color/colorAccent"
-                android:text="Sélectionner" />
+                android:text="@string/txt_flight_btn_select" />
         </LinearLayout>
 
     </LinearLayout>
