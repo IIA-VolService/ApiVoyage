@@ -23,4 +23,12 @@
     <string name="txt_menu_contact">Contact</string>
     <string name="txt_menu_other">Autres</string>
 
+    <string name="txt_help_subtitle01">Réserver un vol</string>
+    <string name="txt_help_subtitle02">Réservez un hôtel et une voiture</string>
+    <string name="txt_help_text01">Cette application vous permet d\'effectuer une recherche sur les vols disponibles et de réserver vos places pour ce vol.</string>
+    <string name="txt_help_text02">Vous pouvez en plus réserver un hôtel ou louer une voiture à la destination souhaitée !</string>
+    <string name="txt_help_boldtext01">Pour cela utiliser l\'action \'Chosir son vol\'</string>
+    <string name="txt_help_boldtext02">Pour cela utiliser l\'action \'Réserver un hôtel\' et \'Louer une voiture\'</string>
+
+
 </resources>
