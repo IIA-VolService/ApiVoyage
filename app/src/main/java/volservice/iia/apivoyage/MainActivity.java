@@ -1,5 +1,6 @@
 package volservice.iia.apivoyage;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -99,5 +100,8 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    public FragmentManager getMainFrgManager() {
+        return getSupportFragmentManager();
+    }
 
 }
