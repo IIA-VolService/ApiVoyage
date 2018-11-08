@@ -6,4 +6,21 @@
     <string name="nav_header_subtitle">github.com/IIA-VolService/ApiVoyage</string>
     <string name="nav_header_desc">Menu</string>
     <string name="action_settings">Paramètres</string>
+    <string name="txt_contact_us">Nous contacter</string>
+    <string name="txt_github">Github</string>
+    <string name="txt_contact_thanks">Merci d\'avoir téléchargé \'Voyage de rêve\' !</string>
+    <string name="txt_contact_send_mail">Nous envoyer un mail</string>
+    <string name="txt_contact_mail">t.neveux.du.geniebre@iia-laval.fr</string>
+    <string name="txt_contact_gitlink">"https://github.com/IIA-VolService/ApiVoyage"</string>
+    <string name="txt_contact_sujet">Sujet</string>
+    <string name="txt_contact_content">Contenu du mail...</string>
+    <string name="txt_contact_sending">Envoi du mail...</string>
+    <string name="txt_contact_no_mail_app">Vous n\'avez pas d\'application de mailing</string>
+    <string name="txt_menu_flight">Choisir un vol</string>
+    <string name="txt_menu_hostel">Réserver un hotêl</string>
+    <string name="txt_menu_rent_a_car">Louer une voiture</string>
+    <string name="txt_menu_settings">Paramètres</string>
+    <string name="txt_menu_contact">Contact</string>
+    <string name="txt_menu_other">Autres</string>
+
 </resources>

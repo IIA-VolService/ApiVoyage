@@ -26,7 +26,7 @@ public class ContactFragment extends Fragment {
         view.findViewById(R.id.contactImgGit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/IIA-VolService/ApiVoyage")));
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.txt_contact_gitlink))));
             }
         });
 
@@ -40,19 +40,18 @@ public class ContactFragment extends Fragment {
     }
 
     protected void sendEmail() {
-        String[] TO = {"t.neveux.du.geniebre@iia-laval.fr"};
+        String TO = getString(R.string.txt_contact_mail);
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
 
-        emailIntent.setData(Uri.parse("mailto:"));
-        emailIntent.setType("text/plain");
+        emailIntent.setDataAndType(Uri.parse("mailto:"), "text/plain");
         emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Your subject");
-        emailIntent.putExtra(Intent.EXTRA_TEXT, "Email message goes here");
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.txt_contact_sujet));
+        emailIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.txt_contact_content));
 
         try {
-            startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+            startActivity(Intent.createChooser(emailIntent, getString(R.string.txt_contact_sending)));
         } catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(this.getContext(), "Vous n'avez pas d'application de mailing", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this.getContext(), getString(R.string.txt_contact_sending), Toast.LENGTH_SHORT).show();
         }
     }
 }
