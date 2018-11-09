@@ -48,8 +48,8 @@
             android:id="@+id/secondLinePlacesCar"
             android:layout_width="0dp"
             android:layout_height="26dip"
-            android:layout_weight="3"
-            android:text="Oscaro"
+            android:layout_weight="2"
+            android:text="Citroën"
             android:textSize="12sp"
             android:textStyle="bold" />
 
@@ -57,9 +57,9 @@
             android:id="@+id/secondLinePrixCar"
             android:layout_width="0dp"
             android:layout_height="26dip"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:singleLine="true"
-            android:text="254 €"
+            android:text="254 € / jour"
             android:textColor="#333333"
             android:textSize="15sp"
             android:textStyle="bold" />
@@ -74,7 +74,7 @@
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@id/lyt_ic_car"
         android:gravity="center_vertical"
-        android:text="AUDI TT - 5 places"
+        android:text="C8 Picasso - 5 places"
         android:textSize="13sp"
         android:textStyle="bold" />
 

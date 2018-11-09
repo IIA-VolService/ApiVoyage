@@ -15,14 +15,48 @@ public class CarItem implements Serializable {
     private String prix;
     private String nbPlaces;
     private String loueur;
+    private String classe;
+    private String marque;
+    private int type;
 
-    public CarItem(String modele, String prix, Date dateDebut, Date dateFin, String nbPlaces, String loueur) {
+    public CarItem(String modele, int prix, Date dateDebut, Date dateFin, int nbPlaces, String loueur, String marque) {
         this.modele = modele;
-        this.prix = prix;
-        this.nbPlaces = nbPlaces;
+        this.prix = "" + prix;
+        this.classe = prix > 50 ? prix > 100 ? "PREMIMUM" : "AFFAIRE" : "ECONONIMQUE";
+        this.type = prix > 50 ? prix > 100 ? 1 : 2 : 3;
+        this.nbPlaces = String.valueOf(nbPlaces) + (nbPlaces > 1 ? "places" : "place");
         this.loueur = loueur;
+        this.marque = marque;
         DateFormat formatterDay = new SimpleDateFormat("dd/MM/yyyy");
         this.dateDebut = formatterDay.format(dateDebut);
         this.dateFin = formatterDay.format(dateFin);
+    }
+
+    public String getModeleAndPlaces() {
+        return modele + " - " + nbPlaces;
+    }
+
+    public String getPrix() {
+        return prix + "€ / jour";
+    }
+
+    public String getClasse() {
+        return classe;
+    }
+
+    public String getDateDebut() {
+        return dateDebut;
+    }
+
+    public String getDateFin() {
+        return dateFin;
+    }
+
+    public String getMarque() {
+        return marque;
+    }
+
+    public int getType() {
+        return type;
     }
 }

@@ -45,7 +45,6 @@ public class FlightFragment extends Fragment {
     private Boolean premium;
     private Boolean business;
 
-
     //requete https Vol
 
     public void startRequest() throws IOException {
@@ -58,7 +57,6 @@ public class FlightFragment extends Fragment {
         BufferedReader in = new BufferedReader(new InputStreamReader(cnn.getInputStream()));
 
         StringBuffer sb = new StringBuffer();
-
     }
 
     @Nullable

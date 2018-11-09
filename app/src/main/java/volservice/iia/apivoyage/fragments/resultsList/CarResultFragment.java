@@ -16,10 +16,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import volservice.iia.apivoyage.R;
-import volservice.iia.apivoyage.adapters.HostelAdapter;
+import volservice.iia.apivoyage.adapters.CarAdapter;
 import volservice.iia.apivoyage.fragments.FlightFragment;
-import volservice.iia.apivoyage.fragments.HostelFragment;
-import volservice.iia.apivoyage.items.HostelItem;
+import volservice.iia.apivoyage.fragments.RentACarFragment;
+import volservice.iia.apivoyage.items.CarItem;
 
 public class CarResultFragment extends Fragment {
 
@@ -38,21 +38,21 @@ public class CarResultFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         arguments = getArguments();
-        return inflater.inflate(R.layout.frg_resultlist_hostel, null);
+        return inflater.inflate(R.layout.frg_resultlist_car, null);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        listView = view.findViewById(R.id.list_hostel);
+        listView = view.findViewById(R.id.list_car);
         btnReturn = view.findViewById(R.id.list_return);
         btnValid = view.findViewById(R.id.list_accept);
         btnValid.setActivated(false);
 
         btnValid.setText(getString(R.string.txt_btn_select));
-        final HostelItem[] items = (HostelItem[]) arguments.getSerializable(ITEMS);
-        listView.setAdapter(new HostelAdapter(view.getContext(), items));
+        final CarItem[] items = (CarItem[]) arguments.getSerializable(ITEMS);
+        listView.setAdapter(new CarAdapter(view.getContext(), items));
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -80,7 +80,7 @@ public class CarResultFragment extends Fragment {
                 // Récupérer l'item actuel + le sauvergarder et le transmettre au formulaire client
 
                 Toast.makeText(v.getContext(), getString(R.string.txt_toast_success), Toast.LENGTH_SHORT).show();
-                Fragment fragment = new HostelFragment();
+                Fragment fragment = new RentACarFragment();
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction ft = fragmentManager.beginTransaction();
