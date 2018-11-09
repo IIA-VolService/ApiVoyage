@@ -172,6 +172,9 @@ public class FlightFragment extends Fragment {
         btnSearch = view.findViewById(R.id.flight_btn_search);
         editTextMessageErreur = view.findViewById(R.id.MessageErreur);
 
+        lstRetour = null;
+        lstAller = null;
+
         checkBoxClasseEco.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

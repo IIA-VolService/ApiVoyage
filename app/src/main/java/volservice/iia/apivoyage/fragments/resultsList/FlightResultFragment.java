@@ -81,9 +81,7 @@ public class FlightResultFragment extends Fragment {
         btnValid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Récupérer l'item actuel + le sauvergarder et le transmettre au formulaire client
-
-                Fragment fragment = null;
+                Fragment fragment;
                 Bundle bundle = null;
                 if (isAller) {
                     Toast.makeText(v.getContext(), getString(R.string.txt_toast_success), Toast.LENGTH_SHORT).show();
