@@ -204,6 +204,16 @@
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/MessageErreur"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:padding="8dp"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="15dp" />
+
         <Button
             android:id="@+id/flight_btn_search"
             android:layout_width="match_parent"
