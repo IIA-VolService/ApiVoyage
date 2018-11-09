@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,7 +29,7 @@ public class RentACarFragment extends Fragment {
     private EditText editTextTypeVoiture;
 
     private Button btnSearch;
-    private EditText editTextMessageErreur;
+    private TextView editTextMessageErreur;
 
     private String villeLocation;
     private String agenceLocation;

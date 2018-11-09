@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -29,7 +30,7 @@ public class HostelFragment extends Fragment {
     private EditText editTextNbPersonnesHebergement;
 
     private Button btnSearch;
-    private EditText editTextMessageErreur;
+    private TextView editTextMessageErreur;
 
     private String paysHebergement;
     private String villeHebergement;

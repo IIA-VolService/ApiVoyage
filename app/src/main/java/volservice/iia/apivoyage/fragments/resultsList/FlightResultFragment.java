@@ -19,6 +19,7 @@ import volservice.iia.apivoyage.MainActivity;
 import volservice.iia.apivoyage.R;
 import volservice.iia.apivoyage.adapters.FlightAdapter;
 import volservice.iia.apivoyage.fragments.FlightFragment;
+import volservice.iia.apivoyage.fragments.MainFragment;
 import volservice.iia.apivoyage.items.FlightItem;
 
 public class FlightResultFragment extends Fragment {
@@ -85,14 +86,16 @@ public class FlightResultFragment extends Fragment {
                 Fragment fragment;
                 Bundle bundle = null;
                 if (isAller) {
-                    Toast.makeText(v.getContext(), getString(R.string.txt_toast_success), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), getString(R.string.txt_toast_aller_isok), Toast.LENGTH_SHORT).show();
                     bundle = new Bundle();
                     bundle.putSerializable(ITEMS_ALLER, null);
                     bundle.putSerializable(ITEMS_RETOUR, (FlightItem[]) arguments.getSerializable(ITEMS_RETOUR));
                     bundle.putSerializable(SELECTION_STATE, false);
                     fragment = new FlightResultFragment();
                 } else {
-                    fragment = new FlightFragment();
+                    // TODO make reservation
+                    Toast.makeText(v.getContext(), getString(R.string.txt_toast_success), Toast.LENGTH_SHORT).show();
+                    fragment = new MainFragment();
                 }
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();

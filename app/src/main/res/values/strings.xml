@@ -41,6 +41,7 @@
     <string name="txt_frg_flight_error_champs_invalides">Veuillez remplir tous les champs</string>
 
     <string name="txt_toast_success">La réservation a été effectuée.</string>
+    <string name="txt_toast_aller_isok">L\'aller est validé.</string>
 
     <string name="txt_hostel_list_title">Choisissez un hôtel</string>
     <string name="txt_car_list_title">Choisissez un véhicule</string>
