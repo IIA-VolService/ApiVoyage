@@ -46,8 +46,9 @@
                 android:layout_height="40dp"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="Paris"
-                android:textSize="15sp" />
+                android:hint="Paris" />
+
+            android:textSize="15sp" />
 
         </LinearLayout>
 
