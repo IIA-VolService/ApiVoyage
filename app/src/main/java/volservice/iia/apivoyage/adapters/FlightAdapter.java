@@ -28,9 +28,9 @@ public class FlightAdapter extends ArrayAdapter<FlightItem> {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View itemView = inflater.inflate(R.layout.item_flight, parent, false);
         TextView txtDate = itemView.findViewById(R.id.descPlaneDate);
-        TextView txtvol = itemView.findViewById(R.id.firstLine);
-        TextView txtplaces = itemView.findViewById(R.id.secondLinePlaces);
-        TextView txtprix = itemView.findViewById(R.id.secondLinePrix);
+        TextView txtvol = itemView.findViewById(R.id.firstLineFlight);
+        TextView txtplaces = itemView.findViewById(R.id.secondLinePlacesFlight);
+        TextView txtprix = itemView.findViewById(R.id.secondLinePrixFlight);
         ImageView imageView = itemView.findViewById(R.id.iconPlaneItem);
 
         txtDate.setText(values[position].getDate());

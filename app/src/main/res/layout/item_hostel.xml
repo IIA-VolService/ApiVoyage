@@ -4,7 +4,7 @@
     android:padding="6dip">
 
     <LinearLayout
-        android:id="@+id/lyt_ic"
+        android:id="@+id/lyt_ic_hostel"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:layout_alignParentTop="true"
@@ -39,13 +39,13 @@
         android:layout_width="fill_parent"
         android:layout_height="26dip"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/lyt_ic"
+        android:layout_toRightOf="@id/lyt_ic_hostel"
         android:orientation="horizontal"
         android:singleLine="true"
         android:weightSum="4">
 
         <TextView
-            android:id="@+id/secondLinePlaces"
+            android:id="@+id/secondLinePlacesHostel"
             android:layout_width="0dp"
             android:layout_height="26dip"
             android:layout_weight="2"
@@ -54,7 +54,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/secondLinePrix"
+            android:id="@+id/secondLinePrixHostel"
             android:layout_width="0dp"
             android:layout_height="26dip"
             android:layout_weight="2"
@@ -66,13 +66,13 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/firstLine"
+        android:id="@+id/firstLineHostel"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignWithParentIfMissing="true"
         android:layout_above="@id/lyt_scd"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@id/lyt_ic"
+        android:layout_toRightOf="@id/lyt_ic_hostel"
         android:gravity="center_vertical"
         android:text="Le grand Palace, Suite Royale (6places)"
         android:textSize="13sp"
