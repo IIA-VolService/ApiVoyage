@@ -13,10 +13,14 @@ public class CarItem implements Serializable {
     private String dateDebut;
     private String dateFin;
     private String prix;
+    private String nbPlaces;
+    private String loueur;
 
-    public CarItem(String modele, String prix, Date dateDebut, Date dateFin) {
+    public CarItem(String modele, String prix, Date dateDebut, Date dateFin, String nbPlaces, String loueur) {
         this.modele = modele;
         this.prix = prix;
+        this.nbPlaces = nbPlaces;
+        this.loueur = loueur;
         DateFormat formatterDay = new SimpleDateFormat("dd/MM/yyyy");
         this.dateDebut = formatterDay.format(dateDebut);
         this.dateFin = formatterDay.format(dateFin);
