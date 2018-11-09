@@ -16,7 +16,9 @@ import volservice.iia.apivoyage.fragments.ContactFragment;
 import volservice.iia.apivoyage.fragments.FlightFragment;
 import volservice.iia.apivoyage.fragments.HelpFragment;
 import volservice.iia.apivoyage.fragments.HostelFragment;
+import volservice.iia.apivoyage.fragments.MainFragment;
 import volservice.iia.apivoyage.fragments.RentACarFragment;
+import volservice.iia.apivoyage.fragments.resultsList.FlightResultFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -36,6 +38,13 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        Fragment fragment = new MainFragment();
+        FragmentManager fragmentManager = this.getSupportFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+
+        ft.replace(R.id.screenArea, fragment);
+        ft.commit();
     }
 
     @Override

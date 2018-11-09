@@ -82,8 +82,7 @@ public class FlightFragment extends Fragment {
     }
 
     private boolean askRetour() throws IOException, JSONException {
-        DateFormat formatterDay = new SimpleDateFormat("dd-MM-yyyy");
-        String requestGetVolRetour = "https://192.168.214.14:8890/api_vols/vol/getListVol.php?start=" + lieuArrivee + "&end=" + lieuDepart + "&date=" + formatterDay.format(dateRetour) + "&nbPassager=" + nbPassager + "&classVol=" + classe;
+        String requestGetVolRetour = "https://192.168.214.14:8890/api_vols/vol/getListVol.php?start=" + lieuArrivee + "&end=" + lieuDepart + "&date=" + dateRetour + "&nbPassager=" + nbPassager + "&classVol=" + classe;
 
         URL url = new URL(requestGetVolRetour);
         HttpsURLConnection cnn = (HttpsURLConnection) url.openConnection();
@@ -100,8 +99,7 @@ public class FlightFragment extends Fragment {
     }
 
     private boolean askAller() throws IOException, JSONException {
-        DateFormat formatterDay = new SimpleDateFormat("dd-MM-yyyy");
-        String requestGetVolAller = "https://192.168.214.14:8890/api_vols/vol/getListVol.php?start=" + lieuDepart + "&end=" + lieuArrivee + "&date=" + formatterDay.format(dateAller) + "&nbPassager=" + nbPassager + "&classVol=" + classe;
+        String requestGetVolAller = "https://192.168.214.14:8890/api_vols/vol/getListVol.php?start=" + lieuDepart + "&end=" + lieuArrivee + "&date=" +dateAller + "&nbPassager=" + nbPassager + "&classVol=" + classe;
         URL url = new URL(requestGetVolAller);
         HttpsURLConnection cnn = (HttpsURLConnection) url.openConnection();
         cnn.setRequestMethod("GET");
@@ -202,11 +200,11 @@ public class FlightFragment extends Fragment {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                lieuDepart = editTextDepart.toString();
-                lieuArrivee = editTextArrivee.toString();
-                dateAller = editTextDateAller.toString();
-                dateRetour = editTextDateRetour.toString();
-                nbPassager = Integer.valueOf(editTextNbPassager.toString());
+                lieuDepart = editTextDepart.getText().toString();
+                lieuArrivee = editTextArrivee.getText().toString();
+                dateAller = editTextDateAller.getText().toString();
+                dateRetour = editTextDateRetour.getText().toString();
+                nbPassager = Integer.valueOf(editTextNbPassager.getText().toString());
 
                 eco = checkBoxClasseEco.isChecked();
                 premium = checkBoxClassePremium.isChecked();
