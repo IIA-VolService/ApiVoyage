@@ -43,15 +43,21 @@ public class ContactFragment extends Fragment {
 
     protected void sendEmail() {
         String TO = getString(R.string.txt_contact_mail);
-        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+//        Intent emailIntent = new Intent(Intent.ACTION_SEND);
 
-        emailIntent.setDataAndType(Uri.parse("mailto:"), "text/plain");
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.txt_contact_sujet));
-        emailIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.txt_contact_content));
+        Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                "mailto", TO, null));
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.txt_contact_sujet));
+        intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.txt_contact_content));
+        startActivity(Intent.createChooser(intent, "Choose an Email client :"));
+
+//        emailIntent.setDataAndType(Uri.parse("mailto:"), "text/plain");
+//        emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
+//        emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.txt_contact_sujet));
+//        emailIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.txt_contact_content));
 
         try {
-            startActivity(Intent.createChooser(emailIntent, getString(R.string.txt_contact_sending)));
+            startActivity(Intent.createChooser(intent, getString(R.string.txt_contact_sending)));
         } catch (android.content.ActivityNotFoundException ex) {
             Toast.makeText(this.getContext(), getString(R.string.txt_contact_sending), Toast.LENGTH_SHORT).show();
         }
