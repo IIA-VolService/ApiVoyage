@@ -25,7 +25,9 @@
 
     <string name="txt_flight_list_title">Choisissez un vol</string>
     <string name="txt_flight_btn_back">Retour</string>
-    <string name="txt_flight_btn_select">Sélectionner</string>
+    <string name="txt_flight_btn_select_aller">Sélectionner aller</string>
+    <string name="txt_flight_btn_select_retour">Sélectionner retour</string>
+
 
     <string name="txt_help_subtitle01">Réserver un vol</string>
     <string name="txt_help_subtitle02">Réservez un hôtel et une voiture</string>
@@ -36,5 +38,7 @@
 
     <string name="txt_frg_flight_error_checkbox">Veuillez sélectionner une catgorie</string>
     <string name="txt_frg_flight_error_champs_invalides">Veuillez remplir tous les champs</string>
+
+    <string name="txt_toast_success">La réservation a été effectuée.</string>
 
 </resources>

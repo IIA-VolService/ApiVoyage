@@ -1,6 +1,7 @@
 package volservice.iia.apivoyage.fragments;
 
 import android.graphics.Color;
+import android.graphics.ImageFormat;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import volservice.iia.apivoyage.R;
 import volservice.iia.apivoyage.adapters.FlightAdapter;
@@ -20,7 +22,11 @@ import volservice.iia.apivoyage.items.FlightItem;
 
 public class FlightResultFragment extends Fragment {
 
-    private final static String ITEMS = "ITEMS";
+    private final static String ITEMS_ALLER = "ITEMS_ALLER";
+    private final static String ITEMS_RETOUR = "ITEMS_RETOUR";
+    // ALLER = true REOUR = false
+    private final static String SELECTION_STATE = "SELECTION_STATE";
+
     private Bundle arguments;
 
     private ListView listView;
@@ -45,10 +51,11 @@ public class FlightResultFragment extends Fragment {
         listView = view.findViewById(R.id.list_flight);
         btnReturn = view.findViewById(R.id.list_return);
         btnValid = view.findViewById(R.id.list_accept);
-
         btnValid.setActivated(false);
 
-        final FlightItem[] items = (FlightItem[]) arguments.getSerializable(ITEMS);
+        final boolean isAller = arguments.getBoolean(SELECTION_STATE);
+        btnValid.setText(isAller ? getText(R.string.txt_flight_btn_select_aller) : getString(R.string.txt_flight_btn_select_retour));
+        final FlightItem[] items = isAller ? (FlightItem[]) arguments.getSerializable(ITEMS_ALLER) : (FlightItem[]) arguments.getSerializable(ITEMS_RETOUR);
         listView.setAdapter(new FlightAdapter(view.getContext(), items));
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -76,14 +83,25 @@ public class FlightResultFragment extends Fragment {
             public void onClick(View v) {
                 // Récupérer l'item actuel + le sauvergarder et le transmettre au formulaire client
 
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("ITEM", (FlightItem) listView.getAdapter().getItem(idItemSelected));
-//                Fragment fragment = new FlightFragment();
-//                fragment.setArguments(args);
+                Fragment fragment = null;
+                Bundle bundle = null;
+                if (isAller) {
+                    Toast.makeText(v.getContext(), getString(R.string.txt_toast_success), Toast.LENGTH_SHORT).show();
+                    bundle = new Bundle();
+                    bundle.putSerializable(ITEMS_ALLER, null);
+                    bundle.putSerializable(ITEMS_RETOUR, (FlightItem[]) arguments.getSerializable(ITEMS_RETOUR));
+                    bundle.putSerializable(SELECTION_STATE, false);
+                    fragment = new FlightResultFragment();
+                } else {
+                    fragment = new FlightFragment();
+                }
+
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction ft = fragmentManager.beginTransaction();
+                if (bundle != null)
+                    fragment.setArguments(bundle);
 
-                // ft.replace(R.id.screenArea, );
+                ft.replace(R.id.screenArea, fragment);
                 ft.commit();
             }
         });
