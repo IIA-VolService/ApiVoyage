@@ -46,7 +46,7 @@ public class FlightFragment extends Fragment {
     private Boolean business;
 
 
-    //requete https
+    //requete https Vol
 
     public static void main(String[] args) throws IOException {
 
