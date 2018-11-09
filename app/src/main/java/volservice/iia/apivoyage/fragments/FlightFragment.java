@@ -154,7 +154,9 @@ public class FlightFragment extends Fragment {
         JSONArray arr = reader.getJSONArray("result");
         for (int i = 0; i < arr.length(); i++) {
             JSONObject resa = arr.getJSONObject(i).getJSONObject("reservations");
-            item = new FlightItem(arr.getJSONObject(i).getString("villeDepart"),
+            item = new FlightItem(
+                    arr.getJSONObject(i).getInt("id"),
+                    arr.getJSONObject(i).getString("villeDepart"),
                     arr.getJSONObject(i).getString("villeArrivee"),
                     arr.getJSONObject(i).getString("codeAeroportDepart"),
                     arr.getJSONObject(i).getString("codeAeroportArrivee"),

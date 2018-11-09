@@ -35,6 +35,10 @@ public class FlightResultFragment extends Fragment {
     private Button btnReturn;
     private Button btnValid;
 
+    private int idVol;
+    private int idVolAller;
+    private int idVolRetour;
+
     private int idItemSelected = -1;
     private View lastViewSelected = null;
 
@@ -86,13 +90,16 @@ public class FlightResultFragment extends Fragment {
                 Fragment fragment;
                 Bundle bundle = null;
                 if (isAller) {
+                    idVolAller = idVol;
                     Toast.makeText(v.getContext(), getString(R.string.txt_toast_aller_isok), Toast.LENGTH_SHORT).show();
                     bundle = new Bundle();
+                    idVolAller = idItemSelected;
                     bundle.putSerializable(ITEMS_ALLER, null);
                     bundle.putSerializable(ITEMS_RETOUR, (FlightItem[]) arguments.getSerializable(ITEMS_RETOUR));
                     bundle.putSerializable(SELECTION_STATE, false);
                     fragment = new FlightResultFragment();
                 } else {
+                    idVolRetour = idVol;
                     // TODO make reservation
                     Toast.makeText(v.getContext(), getString(R.string.txt_toast_success), Toast.LENGTH_SHORT).show();
                     fragment = new MainFragment();
@@ -129,6 +136,7 @@ public class FlightResultFragment extends Fragment {
             lastViewSelected = view;
             btnValid.setEnabled(true);
         }
+        idVol = idItemSelected != -1 ? ((FlightItem) listView.getAdapter().getItem(position)).getId() : -1;
         btnValid.invalidate();
     }
 }

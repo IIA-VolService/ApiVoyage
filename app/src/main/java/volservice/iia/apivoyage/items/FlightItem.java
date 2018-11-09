@@ -21,8 +21,10 @@ public class FlightItem implements Serializable {
     private String categorie;
     private String prix;
     private String placesRestantes;
+    private int id;
 
-    public FlightItem(String villeDepart, String villeArrivee, String codeVilleDepart, String codeVilleArrivee, String categorie, int prix, int placesRestantes, String dateDepart, String dateArrivee) {
+    public FlightItem(int id, String villeDepart, String villeArrivee, String codeVilleDepart, String codeVilleArrivee, String categorie, int prix, int placesRestantes, String dateDepart, String dateArrivee) {
+        this.id = id;
         this.villeDepart = villeDepart;
         this.villeArrivee = villeArrivee;
         this.codeVilleDepart = codeVilleDepart;
@@ -71,5 +73,9 @@ public class FlightItem implements Serializable {
 
     public String getPlacesRestantes() {
         return "Places disponibles : " + placesRestantes;
+    }
+
+    public int getId() {
+        return id;
     }
 }
