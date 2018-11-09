@@ -46,7 +46,7 @@
                 android:layout_height="40dp"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="Lieu de départ"
+                android:text="Paris"
                 android:textSize="15sp" />
 
         </LinearLayout>
@@ -69,7 +69,7 @@
                 android:layout_height="40dp"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="Lieu d'arrivée"
+                android:text="Amsterdam"
                 android:textSize="15sp" />
 
         </LinearLayout>
@@ -99,7 +99,7 @@
                 android:id="@+id/editTextAller"
                 android:layout_width="227dp"
                 android:layout_height="40dp"
-                android:text ="01-01-2000"
+                android:text ="24-11-2018"
                 android:textSize="15sp"
                 android:ems="10"
                 android:inputType="date" />
@@ -122,7 +122,7 @@
                 android:id="@+id/editTextRetour"
                 android:layout_width="227dp"
                 android:layout_height="40dp"
-                android:text ="01-01-2000"
+                android:text ="24-11-2018"
                 android:textSize="15sp"
                 android:ems="10"
                 android:inputType="date" />
