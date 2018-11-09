@@ -48,9 +48,9 @@ public class FlightFragment extends Fragment {
 
     //requete https Vol
 
-    public static void main(String[] args) throws IOException {
+    public void startRequest() throws IOException {
 
-        String urlLink = "https://localhost.dev:8890/api_vols/vol/getListVol.php?start=paris&end=new york&date=\"24-11-2018&nbPassager=3&classVol=economique";
+        String urlLink = "https://192.168.214.14:8890/api_vols/vol/getListVol.php?start=paris&end=new york&date=24-11-2018&nbPassager=3&classVol=economique";
         URL url = new URL(urlLink);
         HttpsURLConnection cnn = (HttpsURLConnection) url.openConnection();
         cnn.setRequestMethod("GET");

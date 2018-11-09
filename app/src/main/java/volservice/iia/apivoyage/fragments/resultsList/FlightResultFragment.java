@@ -1,7 +1,6 @@
-package volservice.iia.apivoyage.fragments;
+package volservice.iia.apivoyage.fragments.resultsList;
 
 import android.graphics.Color;
-import android.graphics.ImageFormat;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,6 +17,7 @@ import android.widget.Toast;
 
 import volservice.iia.apivoyage.R;
 import volservice.iia.apivoyage.adapters.FlightAdapter;
+import volservice.iia.apivoyage.fragments.FlightFragment;
 import volservice.iia.apivoyage.items.FlightItem;
 
 public class FlightResultFragment extends Fragment {

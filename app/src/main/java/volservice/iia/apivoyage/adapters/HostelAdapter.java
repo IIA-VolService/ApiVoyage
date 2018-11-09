@@ -33,7 +33,6 @@ public class HostelAdapter extends ArrayAdapter<HostelItem> {
         TextView txtprix = itemView.findViewById(R.id.secondLinePrixHostel);
         ImageView imageView = itemView.findViewById(R.id.iconCarItem);
 
-        //TODO set image car selon classe
         int stars = values[position].getEtoiles();
         imageView.setImageResource(stars > 2 ? stars == 5 ? R.drawable.ic_hostel_premium : R.drawable.ic_hostel_advanced : R.drawable.ic_hostel_basic);
 
