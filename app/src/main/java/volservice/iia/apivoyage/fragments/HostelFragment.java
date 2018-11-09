@@ -100,10 +100,10 @@ public class HostelFragment extends Fragment {
     }
 
     private boolean checkIfFormIsCorrect() {
-            if (!paysHebergement.isEmpty() && !villeHebergement.isEmpty() && !typeHebergement.isEmpty() && !dateDebutReservationHebergement.isEmpty() && !dateFinReservationHebergement.isEmpty() && nbPersonnes > 0) {
-                return true;
-            }
-            editTextMessageErreur.setText(getText(R.string.txt_frg_flight_error_champs_invalides));
-            return false;
+        if (!paysHebergement.isEmpty() && !villeHebergement.isEmpty() && !typeHebergement.isEmpty() && !dateDebutReservationHebergement.isEmpty() && !dateFinReservationHebergement.isEmpty() && nbPersonnes > 0) {
+            return true;
+        }
+        editTextMessageErreur.setText(getText(R.string.txt_frg_flight_error_champs_invalides));
+        return false;
     }
 }

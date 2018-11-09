@@ -20,7 +20,7 @@
             android:textAlignment="center"
             android:textSize="40sp"
             android:textStyle="bold"
-            android:textColor="@color/colorAccentDark"/>
+            android:textColor="@color/colorAccentDark" />
 
         <TextView
             android:layout_width="match_parent"

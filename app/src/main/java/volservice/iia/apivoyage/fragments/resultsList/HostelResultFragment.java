@@ -16,11 +16,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import volservice.iia.apivoyage.R;
-import volservice.iia.apivoyage.adapters.FlightAdapter;
 import volservice.iia.apivoyage.adapters.HostelAdapter;
 import volservice.iia.apivoyage.fragments.FlightFragment;
 import volservice.iia.apivoyage.fragments.HostelFragment;
-import volservice.iia.apivoyage.items.FlightItem;
 import volservice.iia.apivoyage.items.HostelItem;
 
 public class HostelResultFragment extends Fragment {
