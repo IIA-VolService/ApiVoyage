@@ -41,7 +41,7 @@
                 android:gravity="center" />
 
             <EditText
-                android:id="@+id/editTextVille"
+                android:id="@+id/editTextVilleVoiture"
                 android:layout_width="229dp"
                 android:layout_height="35dp"
                 android:ems="10"
@@ -63,7 +63,7 @@
                 android:gravity="center" />
 
             <EditText
-                android:id="@+id/editTextAgence"
+                android:id="@+id/editTextAgenceVoiture"
                 android:layout_width="229dp"
                 android:layout_height="35dp"
                 android:ems="10"
@@ -94,7 +94,7 @@
                 android:gravity="center" />
 
             <EditText
-                android:id="@+id/editTextDebutReservation"
+                android:id="@+id/editTextDebutReservationVoiture"
                 android:layout_width="150dp"
                 android:layout_height="33dp"
                 android:ems="10"
@@ -115,7 +115,7 @@
                 android:gravity="center" />
 
             <EditText
-                android:id="@+id/editTextFinReservation"
+                android:id="@+id/editTextFinReservationVoiture"
                 android:layout_width="150dp"
                 android:layout_height="33dp"
                 android:ems="10"
@@ -155,7 +155,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/flight_btn_search"
+            android:id="@+id/car_btn_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Rechercher"

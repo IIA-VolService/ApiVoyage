@@ -10,26 +10,49 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+
+import javax.net.ssl.HttpsURLConnection;
+
 import volservice.iia.apivoyage.R;
 
 public class HostelFragment extends Fragment {
 
-    private EditText editTextPays;
-    private EditText editTextVille;
+    private EditText editTextPaysHebergement;
+    private EditText editTextVilleHebergement;
     private EditText editTextTypeHebergement;
-    private EditText editTextDateDebutReservation;
-    private EditText editTextDateFinReservation;
-    private EditText editTextNbPersonnes;
+    private EditText editTextDateDebutReservationHebergement;
+    private EditText editTextDateFinReservationHebergement;
+    private EditText editTextNbPersonnesHebergement;
 
     private Button btnSearch;
     private EditText editTextMessageErreur;
 
-    private String pays;
-    private String ville;
+    private String paysHebergement;
+    private String villeHebergement;
     private String typeHebergement;
-    private String dateDebutReservation;
-    private String dateFinReservation;
+    private String dateDebutReservationHebergement;
+    private String dateFinReservationHebergement;
     private Integer nbPersonnes;
+
+
+    //requete https Hebergement
+
+    public void startRequest() throws IOException {
+
+        String urlLink = "";
+        URL url = new URL(urlLink);
+        HttpsURLConnection cnn = (HttpsURLConnection) url.openConnection();
+        cnn.setRequestMethod("GET");
+
+        BufferedReader in = new BufferedReader(new InputStreamReader(cnn.getInputStream()));
+
+        StringBuffer sb = new StringBuffer();
+
+    }
 
     @Nullable
     @Override
@@ -41,12 +64,12 @@ public class HostelFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        editTextPays = view.findViewById(R.id.editTextPaysHebergement);
-        editTextVille = view.findViewById(R.id.editTextVilleHebergement);
+        editTextPaysHebergement = view.findViewById(R.id.editTextPaysHebergement);
+        editTextVilleHebergement = view.findViewById(R.id.editTextVilleHebergement);
         editTextTypeHebergement = view.findViewById(R.id.editTextTypeHebergement);
-        editTextDateDebutReservation = view.findViewById(R.id.editTextDebutHebergement);
-        editTextDateFinReservation = view.findViewById(R.id.editTextFinHebergement);
-        editTextNbPersonnes = view.findViewById(R.id.editTextNbPersonnes);
+        editTextDateDebutReservationHebergement = view.findViewById(R.id.editTextDebutHebergement);
+        editTextDateFinReservationHebergement = view.findViewById(R.id.editTextFinHebergement);
+        editTextNbPersonnesHebergement = view.findViewById(R.id.editTextNbPersonnesHebergement);
 
         btnSearch = view.findViewById(R.id.hostel_btn_search);
         editTextMessageErreur = view.findViewById(R.id.MessageErreur);
@@ -55,12 +78,12 @@ public class HostelFragment extends Fragment {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pays = editTextPays.toString();
-                ville = editTextVille.toString();
+                paysHebergement = editTextPaysHebergement.toString();
+                villeHebergement = editTextVilleHebergement.toString();
                 typeHebergement = editTextTypeHebergement.toString();
-                dateDebutReservation = editTextDateDebutReservation.toString();
-                dateFinReservation = editTextDateFinReservation.toString();
-                nbPersonnes = Integer.valueOf(editTextNbPersonnes.toString());
+                dateDebutReservationHebergement = editTextDateDebutReservationHebergement.toString();
+                dateFinReservationHebergement = editTextDateFinReservationHebergement.toString();
+                nbPersonnes = Integer.valueOf(editTextNbPersonnesHebergement.toString());
 
                 if (checkIfFormIsCorrect()) {
                     editTextMessageErreur.setVisibility(View.INVISIBLE);
@@ -76,7 +99,7 @@ public class HostelFragment extends Fragment {
     }
 
     private boolean checkIfFormIsCorrect() {
-            if (!pays.isEmpty() && !ville.isEmpty() && !typeHebergement.isEmpty() && !dateDebutReservation.isEmpty() && !dateFinReservation.isEmpty() && nbPersonnes > 0) {
+            if (!paysHebergement.isEmpty() && !villeHebergement.isEmpty() && !typeHebergement.isEmpty() && !dateDebutReservationHebergement.isEmpty() && !dateFinReservationHebergement.isEmpty() && nbPersonnes > 0) {
                 return true;
             }
             editTextMessageErreur.setText(getText(R.string.txt_frg_flight_error_champs_invalides));

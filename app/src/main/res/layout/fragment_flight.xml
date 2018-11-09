@@ -43,7 +43,7 @@
             <EditText
                 android:id="@+id/editTextDepart"
                 android:layout_width="229dp"
-                android:layout_height="35dp"
+                android:layout_height="40dp"
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:text="Lieu de départ"
@@ -66,7 +66,7 @@
             <EditText
                 android:id="@+id/editTextArrivee"
                 android:layout_width="229dp"
-                android:layout_height="35dp"
+                android:layout_height="40dp"
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:text="Lieu d'arrivée"
@@ -98,7 +98,9 @@
             <EditText
                 android:id="@+id/editTextAller"
                 android:layout_width="227dp"
-                android:layout_height="33dp"
+                android:layout_height="40dp"
+                android:text ="01-01-2000"
+                android:textSize="15sp"
                 android:ems="10"
                 android:inputType="date" />
 
@@ -119,7 +121,9 @@
             <EditText
                 android:id="@+id/editTextRetour"
                 android:layout_width="227dp"
-                android:layout_height="33dp"
+                android:layout_height="40dp"
+                android:text ="01-01-2000"
+                android:textSize="15sp"
                 android:ems="10"
                 android:inputType="date" />
 
@@ -150,6 +154,9 @@
                 android:id="@+id/editTextPassager"
                 android:layout_width="80dp"
                 android:layout_height="36dp"
+                android:text ="4"
+                android:textSize="15sp"
+                android:gravity="center"
                 android:ems="10"
                 android:inputType="number" />
 
