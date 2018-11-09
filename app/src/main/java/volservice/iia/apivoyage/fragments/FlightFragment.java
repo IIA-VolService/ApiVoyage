@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import org.json.*;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -82,7 +83,7 @@ public class FlightFragment extends Fragment {
     }
 
     private boolean askRetour() throws IOException, JSONException {
-        String requestGetVolRetour = "https://192.168.214.14:8890/api_vols/vol/getListVol.php?start=" + lieuArrivee + "&end=" + lieuDepart + "&date=" + dateRetour + "&nbPassager=" + nbPassager + "&classVol=" + classe;
+        String requestGetVolRetour = "https://192.168.214.14:8890/api_vols/vol/getListVol.php?start=" + lieuArrivee + "&end=" + lieuDepart + "&date=" + dateRetour + "&nbPassager=" + nbPassager + "&classVol=" + classe + "&token=&token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.FgKm8JNIbbmf-KLFZbQI9NGo_3S3NoIjprvPLISlh0c";
 
         URL url = new URL(requestGetVolRetour);
         HttpsURLConnection cnn = (HttpsURLConnection) url.openConnection();
@@ -99,12 +100,12 @@ public class FlightFragment extends Fragment {
     }
 
     private boolean askAller() throws IOException, JSONException {
-        String requestGetVolAller = "https://192.168.214.14:8890/api_vols/vol/getListVol.php?start=" + lieuDepart + "&end=" + lieuArrivee + "&date=" +dateAller + "&nbPassager=" + nbPassager + "&classVol=" + classe;
+        String requestGetVolAller = "https://192.168.214.14:8890/api_vols/vol/getListVol.php?start=" + lieuDepart + "&end=" + lieuArrivee + "&date=" + dateAller + "&nbPassager=" + nbPassager + "&classVol=" + classe + "&token=&token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.FgKm8JNIbbmf-KLFZbQI9NGo_3S3NoIjprvPLISlh0c";
         URL url = new URL(requestGetVolAller);
         HttpsURLConnection cnn = (HttpsURLConnection) url.openConnection();
         cnn.setRequestMethod("GET");
 
-        JsonReader in = new JsonReader(new InputStreamReader(cnn.getInputStream()));
+        BufferedReader in = new BufferedReader(new InputStreamReader(cnn.getInputStream()));
         JSONObject reader = new JSONObject(in.toString());
         try {
             parseFlyJson(reader, true);
@@ -130,15 +131,16 @@ public class FlightFragment extends Fragment {
         JSONObject obj = new JSONObject("data");
         JSONArray arr = obj.getJSONArray("vols");
         for (int i = 0; i < arr.length(); i++) {
+            JSONObject resa = obj.getJSONObject("reservations");
             item = new FlightItem(arr.getJSONObject(i).getString("villeDepart"),
                     arr.getJSONObject(i).getString("villeArrivee"),
                     arr.getJSONObject(i).getString("codeAeroportDepart"),
                     arr.getJSONObject(i).getString("codeAeroportArrivee"),
-                    arr.getJSONObject(i).getString("categorie"),
-                    arr.getJSONObject(i).getInt("prix"),
-                    arr.getJSONObject(i).getInt("placeDisponible"),
-                    arr.getJSONObject(i).getString("dateDepart"),
-                    arr.getJSONObject(i).getString("dateArrivee")
+                    resa.getString("nom"),
+                    resa.getInt("prix"),
+                    resa.getInt("placeDisponible"),
+                    arr.getJSONObject(i).getString("depart"),
+                    arr.getJSONObject(i).getString("arrivee")
             );
             listRes[i] = item;
         }
