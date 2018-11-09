@@ -20,19 +20,17 @@ public class FlightItem implements Serializable {
     private String prix;
     private String placesRestantes;
 
-    public FlightItem(String villeDepart, String villeArrivee, String codeVilleDepart, String codeVilleArrivee, String categorie, String prix, String placesRestantes, Date dateDepart, Date dateArrivee) {
+    public FlightItem(String villeDepart, String villeArrivee, String codeVilleDepart, String codeVilleArrivee, String categorie, int prix, int placesRestantes, String dateDepart, String dateArrivee) {
         this.villeDepart = villeDepart;
         this.villeArrivee = villeArrivee;
         this.codeVilleDepart = codeVilleDepart;
-        this.codeVilleArrivee = codeVilleArrivee;
         this.categorie = categorie;
         this.prix = prix + "€";
-        this.placesRestantes = placesRestantes;
+        this.placesRestantes = placesRestantes + "";
         DateFormat formatterDay = new SimpleDateFormat("dd/MM/yyyy");
         DateFormat formatterHour = new SimpleDateFormat("hh:mm");
         this.date = formatterDay.format(dateDepart);
         this.heureDepart = formatterHour.format(dateDepart);
-        this.heureArrivee = formatterHour.format(dateArrivee);
     }
 
     public String getDate() {

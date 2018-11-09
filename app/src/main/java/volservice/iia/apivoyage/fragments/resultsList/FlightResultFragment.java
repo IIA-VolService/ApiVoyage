@@ -22,10 +22,10 @@ import volservice.iia.apivoyage.items.FlightItem;
 
 public class FlightResultFragment extends Fragment {
 
-    private final static String ITEMS_ALLER = "ITEMS_ALLER";
-    private final static String ITEMS_RETOUR = "ITEMS_RETOUR";
+    public final static String ITEMS_ALLER = "ITEMS_ALLER";
+    public final static String ITEMS_RETOUR = "ITEMS_RETOUR";
     // ALLER = true REOUR = false
-    private final static String SELECTION_STATE = "SELECTION_STATE";
+    public final static String SELECTION_STATE = "SELECTION_STATE";
 
     private Bundle arguments;
 

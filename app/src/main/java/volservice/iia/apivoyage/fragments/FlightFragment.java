@@ -4,21 +4,30 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.util.JsonReader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
-import java.io.BufferedReader;
+import org.json.*;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import javax.net.ssl.HttpsURLConnection;
 
 import volservice.iia.apivoyage.R;
+import volservice.iia.apivoyage.fragments.resultsList.FlightResultFragment;
+import volservice.iia.apivoyage.items.FlightItem;
 
 public class FlightFragment extends Fragment {
 
@@ -40,23 +49,104 @@ public class FlightFragment extends Fragment {
     private String dateAller;
     private String dateRetour;
     private Integer nbPassager;
+    private String classe;
 
     private Boolean eco;
     private Boolean premium;
     private Boolean business;
 
+    private FlightItem[] lstAller;
+    private FlightItem[] lstRetour;
+
     //requete https Vol
+    public boolean startRequest() throws IOException, JSONException {
+        if (checkBoxClasseBusiness.isChecked()) {
+            classe = "business";
+        } else if (checkBoxClassePremium.isChecked()) {
+            classe = "premium";
+        } else
+            classe = "economique";
 
-    public void startRequest() throws IOException {
+        if (askAller()) {
+            if (askRetour()) {
+                return true;
+            } else {
+                Toast.makeText(this.getContext(), "Impossible de trouver des vols correspondants", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        } else {
+            Toast.makeText(this.getContext(), "Impossible de trouver des vols correspondants", Toast.LENGTH_SHORT).show();
+            return false;
+        }
 
-        String urlLink = "https://192.168.214.14:8890/api_vols/vol/getListVol.php?start=paris&end=new york&date=24-11-2018&nbPassager=3&classVol=economique";
-        URL url = new URL(urlLink);
+    }
+
+    private boolean askRetour() throws IOException, JSONException {
+        DateFormat formatterDay = new SimpleDateFormat("dd-MM-yyyy");
+        String requestGetVolRetour = "https://192.168.214.14:8890/api_vols/vol/getListVol.php?start=" + lieuArrivee + "&end=" + lieuDepart + "&date=" + formatterDay.format(dateRetour) + "&nbPassager=" + nbPassager + "&classVol=" + classe;
+
+        URL url = new URL(requestGetVolRetour);
         HttpsURLConnection cnn = (HttpsURLConnection) url.openConnection();
         cnn.setRequestMethod("GET");
 
-        BufferedReader in = new BufferedReader(new InputStreamReader(cnn.getInputStream()));
+        JsonReader in = new JsonReader(new InputStreamReader(cnn.getInputStream()));
+        JSONObject reader = new JSONObject(in.toString());
+        try {
+            parseFlyJson(reader, false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lstRetour != null && lstRetour.length > 0;
+    }
 
-        StringBuffer sb = new StringBuffer();
+    private boolean askAller() throws IOException, JSONException {
+        DateFormat formatterDay = new SimpleDateFormat("dd-MM-yyyy");
+        String requestGetVolAller = "https://192.168.214.14:8890/api_vols/vol/getListVol.php?start=" + lieuDepart + "&end=" + lieuArrivee + "&date=" + formatterDay.format(dateAller) + "&nbPassager=" + nbPassager + "&classVol=" + classe;
+        URL url = new URL(requestGetVolAller);
+        HttpsURLConnection cnn = (HttpsURLConnection) url.openConnection();
+        cnn.setRequestMethod("GET");
+
+        JsonReader in = new JsonReader(new InputStreamReader(cnn.getInputStream()));
+        JSONObject reader = new JSONObject(in.toString());
+        try {
+            parseFlyJson(reader, true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lstAller != null && lstAller.length > 0;
+    }
+
+    private void parseFlyJson(JSONObject reader, boolean isAller) throws JSONException {
+        FlightItem item;
+        JSONObject objRes = reader.getJSONObject("result");
+        String code = objRes.getString("code");
+
+        // ERROR
+        if (!code.equalsIgnoreCase("success"))
+            return;
+
+        int size = objRes.getInt("nombre");
+
+        FlightItem[] listRes = new FlightItem[size];
+
+        JSONObject obj = new JSONObject("data");
+        JSONArray arr = obj.getJSONArray("vols");
+        for (int i = 0; i < arr.length(); i++) {
+            item = new FlightItem(arr.getJSONObject(i).getString("villeDepart"),
+                    arr.getJSONObject(i).getString("villeArrivee"),
+                    arr.getJSONObject(i).getString("codeAeroportDepart"),
+                    arr.getJSONObject(i).getString("codeAeroportArrivee"),
+                    arr.getJSONObject(i).getString("categorie"),
+                    arr.getJSONObject(i).getInt("prix"),
+                    arr.getJSONObject(i).getInt("placeDisponible"),
+                    arr.getJSONObject(i).getString("dateDepart"),
+                    arr.getJSONObject(i).getString("dateArrivee")
+            );
+            listRes[i] = item;
+        }
+        if (isAller)
+            lstAller = listRes;
+        else lstRetour = listRes;
     }
 
     @Nullable
@@ -120,9 +210,26 @@ public class FlightFragment extends Fragment {
                 business = checkBoxClasseBusiness.isChecked();
                 if (checkIfFormIsCorrect()) {
                     editTextMessageErreur.setVisibility(View.INVISIBLE);
-                    // do my request
+                    try {
+                        if (startRequest()) {
+                            Bundle args = new Bundle();
+                            args.putSerializable(FlightResultFragment.ITEMS_ALLER, lstAller);
+                            args.putSerializable(FlightResultFragment.ITEMS_RETOUR, lstRetour);
+                            args.putBoolean(FlightResultFragment.SELECTION_STATE, true);
 
+                            Fragment fragment = new FlightResultFragment();
+                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                            FragmentTransaction ft = fragmentManager.beginTransaction();
+                            fragment.setArguments(args);
 
+                            ft.replace(R.id.screenArea, fragment);
+                            ft.commit();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 } else {
                     editTextMessageErreur.setVisibility(View.VISIBLE);
                 }
