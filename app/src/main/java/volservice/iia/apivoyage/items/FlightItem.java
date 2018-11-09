@@ -2,7 +2,9 @@ package volservice.iia.apivoyage.items;
 
 import java.io.Serializable;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class FlightItem implements Serializable {
@@ -27,10 +29,20 @@ public class FlightItem implements Serializable {
         this.categorie = categorie;
         this.prix = prix + "€";
         this.placesRestantes = placesRestantes + "";
+
+        Date dateArr = null;
+        Date dateRet = null;
+        try {
+            dateArr = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(dateDepart);
+            dateRet = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(dateArrivee);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         DateFormat formatterDay = new SimpleDateFormat("dd/MM/yyyy");
         DateFormat formatterHour = new SimpleDateFormat("hh:mm");
-        this.date = formatterDay.format(dateDepart);
-        this.heureDepart = formatterHour.format(dateDepart);
+        this.date = formatterDay.format(dateArr);
+        this.heureDepart = formatterHour.format(dateArr);
+        this.heureArrivee = formatterHour.format(dateRet);
     }
 
     public String getDate() {

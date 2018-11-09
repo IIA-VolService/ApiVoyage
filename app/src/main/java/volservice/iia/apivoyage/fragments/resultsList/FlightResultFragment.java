@@ -121,7 +121,7 @@ public class FlightResultFragment extends Fragment {
             }
             // Si on sélectionne un item
             idItemSelected = position;
-            view.setBackgroundColor(Color.parseColor("#0000AA"));
+            view.setBackgroundColor(Color.parseColor("#00DD00"));
             view.invalidate();
             lastViewSelected = view;
             btnValid.setEnabled(true);

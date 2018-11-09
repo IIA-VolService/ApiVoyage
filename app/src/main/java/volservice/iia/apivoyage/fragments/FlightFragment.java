@@ -7,15 +7,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.JsonReader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.*;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -43,7 +46,7 @@ public class FlightFragment extends Fragment {
     private CheckBox checkBoxClassePremium;
 
     private Button btnSearch;
-    private EditText editTextMessageErreur;
+    private TextView editTextMessageErreur;
 
     private String lieuArrivee;
     private String lieuDepart;
@@ -88,11 +91,20 @@ public class FlightFragment extends Fragment {
         URL url = new URL(requestGetVolRetour);
         HttpsURLConnection cnn = (HttpsURLConnection) url.openConnection();
         cnn.setRequestMethod("GET");
+        InputStreamReader in = new InputStreamReader(cnn.getInputStream());
 
-        JsonReader in = new JsonReader(new InputStreamReader(cnn.getInputStream()));
-        JSONObject reader = new JSONObject(in.toString());
+        BufferedReader br = new BufferedReader(in);
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = br.readLine()) != null) {
+            sb.append(line + "\n");
+        }
+        br.close();
+
+        JSONObject jsonObject = new JSONObject(sb.toString());
+
         try {
-            parseFlyJson(reader, false);
+            parseFlyJson(jsonObject, false);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -105,33 +117,43 @@ public class FlightFragment extends Fragment {
         HttpsURLConnection cnn = (HttpsURLConnection) url.openConnection();
         cnn.setRequestMethod("GET");
 
-        BufferedReader in = new BufferedReader(new InputStreamReader(cnn.getInputStream()));
-        JSONObject reader = new JSONObject(in.toString());
+        InputStreamReader in = new InputStreamReader(cnn.getInputStream());
+
+        BufferedReader br = new BufferedReader(in);
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = br.readLine()) != null) {
+            sb.append(line + "\n");
+        }
+        br.close();
+
+        JSONObject jsonObject = new JSONObject(sb.toString());
+
         try {
-            parseFlyJson(reader, true);
+            parseFlyJson(jsonObject, true);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return lstAller != null && lstAller.length > 0;
     }
 
-    private void parseFlyJson(JSONObject reader, boolean isAller) throws JSONException {
+    private void parseFlyJson(JSONObject reader, boolean isAller) throws JSONException, IOException {
         FlightItem item;
-        JSONObject objRes = reader.getJSONObject("result");
-        String code = objRes.getString("code");
+
+        String code = reader.getString("message");
 
         // ERROR
         if (!code.equalsIgnoreCase("success"))
             return;
 
-        int size = objRes.getInt("nombre");
+        int size = reader.getInt("nombre");
 
         FlightItem[] listRes = new FlightItem[size];
 
-        JSONObject obj = new JSONObject("data");
-        JSONArray arr = obj.getJSONArray("vols");
+//        JSONObject obj = new JSONObject("result");
+        JSONArray arr = reader.getJSONArray("result");
         for (int i = 0; i < arr.length(); i++) {
-            JSONObject resa = obj.getJSONObject("reservations");
+            JSONObject resa = arr.getJSONObject(i).getJSONObject("reservations");
             item = new FlightItem(arr.getJSONObject(i).getString("villeDepart"),
                     arr.getJSONObject(i).getString("villeArrivee"),
                     arr.getJSONObject(i).getString("codeAeroportDepart"),
