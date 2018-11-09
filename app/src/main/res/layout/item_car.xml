@@ -1,0 +1,82 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:padding="6dip">
+
+    <LinearLayout
+        android:id="@+id/lyt_ic"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="8dip"
+        android:orientation="vertical"
+        android:weightSum="10">
+
+        <ImageView
+            android:id="@+id/iconPlaneItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="plane"
+            android:layout_weight="9"
+            android:src="@drawable/ic_item_plane" />
+
+        <TextView
+            android:id="@+id/descPlaneDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="24/11/2018"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/lyt_scd"
+        android:layout_width="fill_parent"
+        android:layout_height="26dip"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/lyt_ic"
+        android:orientation="horizontal"
+        android:singleLine="true"
+        android:weightSum="4">
+
+        <TextView
+            android:id="@+id/secondLinePlaces"
+            android:layout_width="0dp"
+            android:layout_height="26dip"
+            android:layout_weight="3"
+            android:text="Places disponibles : 42"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/secondLinePrix"
+            android:layout_width="0dp"
+            android:layout_height="26dip"
+            android:layout_weight="1"
+            android:singleLine="true"
+            android:text="545 €"
+            android:textColor="#333333"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/firstLine"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_above="@id/lyt_scd"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@id/lyt_ic"
+        android:gravity="center_vertical"
+        android:text="PARIS → LONDRES : 14H05 → 16H05"
+        android:textSize="13sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>
+
