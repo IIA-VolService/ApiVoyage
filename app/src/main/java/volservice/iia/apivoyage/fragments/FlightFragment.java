@@ -227,7 +227,7 @@ public class FlightFragment extends Fragment {
                 lieuArrivee = editTextArrivee.getText().toString();
                 dateAller = editTextDateAller.getText().toString();
                 dateRetour = editTextDateRetour.getText().toString();
-                nbPassager = Integer.valueOf(editTextNbPassager.getText().toString());
+                nbPassager = !editTextNbPassager.getText().toString().trim().isEmpty() ? (Integer.valueOf(editTextNbPassager.getText().toString())) : -1;
 
                 eco = checkBoxClasseEco.isChecked();
                 premium = checkBoxClassePremium.isChecked();
