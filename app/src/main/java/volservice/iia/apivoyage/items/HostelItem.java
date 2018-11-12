@@ -2,6 +2,7 @@ package volservice.iia.apivoyage.items;
 
 import java.io.Serializable;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -11,27 +12,36 @@ public class HostelItem implements Serializable {
 
     private String nom;
     private String classe;
-    private String tailleChambre;
     private String dateDebut;
     private String dateFin;
     private String prix;
     private String adresse;
     private String ville;
     private String pays;
+    private String id;
     private int nbEtoile;
 
-    public HostelItem(String nom, int nbEtoile, String tailleChambre, String prix, Date dateDebut, Date dateFin, String adresse, String ville, String pays) {
+    public HostelItem(String id, String nom, int nbEtoile, double prix, String dateDebut, String dateFin, String adresse, String ville, String pays) {
+        this.id = id;
         this.nom = nom;
         this.classe = nbEtoile > 2 ? nbEtoile == 5 ? "LUXE" : "PREMIUM" : "ECONOMIQUE";
-        this.tailleChambre = tailleChambre;
-        this.prix = prix;
+        this.prix = String.valueOf(prix);
         this.adresse = adresse;
         this.ville = ville;
         this.nbEtoile = nbEtoile;
         this.pays = pays;
+        Date dateArr = null;
+        Date dateRet = null;
+        try {
+            dateArr = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(dateDebut);
+            dateRet = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(dateFin);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         DateFormat formatterDay = new SimpleDateFormat("dd/MM/yyyy");
-        this.dateDebut = formatterDay.format(dateDebut);
-        this.dateFin = formatterDay.format(dateFin);
+        this.dateDebut = formatterDay.format(dateArr);
+        this.dateFin = formatterDay.format(dateRet);
     }
 
     public String getClasse() {
@@ -52,5 +62,9 @@ public class HostelItem implements Serializable {
 
     public int getEtoiles() {
         return nbEtoile;
+    }
+
+    public String getId() {
+        return id;
     }
 }

@@ -19,11 +19,12 @@ import volservice.iia.apivoyage.R;
 import volservice.iia.apivoyage.adapters.HostelAdapter;
 import volservice.iia.apivoyage.fragments.FlightFragment;
 import volservice.iia.apivoyage.fragments.HostelFragment;
+import volservice.iia.apivoyage.items.FlightItem;
 import volservice.iia.apivoyage.items.HostelItem;
 
 public class HostelResultFragment extends Fragment {
 
-    private final static String ITEMS = "ITEMS";
+    public final static String ITEMS = "ITEMS";
 
     private Bundle arguments;
 
@@ -31,6 +32,7 @@ public class HostelResultFragment extends Fragment {
     private Button btnReturn;
     private Button btnValid;
 
+    private String idHostel;
     private int idItemSelected = -1;
     private View lastViewSelected = null;
 
@@ -112,6 +114,7 @@ public class HostelResultFragment extends Fragment {
             lastViewSelected = view;
             btnValid.setEnabled(true);
         }
+        idHostel = idItemSelected != -1 ? ((HostelItem) listView.getAdapter().getItem(position)).getId() : "-1";
         btnValid.invalidate();
     }
 }

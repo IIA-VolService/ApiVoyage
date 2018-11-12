@@ -18,8 +18,10 @@ public class CarItem implements Serializable {
     private String classe;
     private String marque;
     private int type;
+    private int id;
 
-    public CarItem(String modele, int prix, Date dateDebut, Date dateFin, int nbPlaces, String loueur, String marque) {
+    public CarItem(int id, String modele, int prix, Date dateDebut, Date dateFin, int nbPlaces, String loueur, String marque) {
+        this.id = id;
         this.modele = modele;
         this.prix = "" + prix;
         this.classe = prix > 50 ? prix > 100 ? "PREMIMUM" : "AFFAIRE" : "ECONONIMQUE";
@@ -58,5 +60,9 @@ public class CarItem implements Serializable {
 
     public int getType() {
         return type;
+    }
+
+    public int getId() {
+        return id;
     }
 }

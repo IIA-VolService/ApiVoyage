@@ -4,21 +4,33 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
 import volservice.iia.apivoyage.R;
+import volservice.iia.apivoyage.fragments.resultsList.FlightResultFragment;
+import volservice.iia.apivoyage.fragments.resultsList.HostelResultFragment;
+import volservice.iia.apivoyage.items.FlightItem;
+import volservice.iia.apivoyage.items.HostelItem;
 
 public class HostelFragment extends Fragment {
 
@@ -39,21 +51,8 @@ public class HostelFragment extends Fragment {
     private String dateFinReservationHebergement;
     private Integer nbPersonnes;
 
+    private HostelItem[] lstHostel;
 
-    //requete https Hebergement
-
-    public void startRequest() throws IOException {
-
-        String urlLink = "";
-        URL url = new URL(urlLink);
-        HttpsURLConnection cnn = (HttpsURLConnection) url.openConnection();
-        cnn.setRequestMethod("GET");
-
-        BufferedReader in = new BufferedReader(new InputStreamReader(cnn.getInputStream()));
-
-        StringBuffer sb = new StringBuffer();
-
-    }
 
     @Nullable
     @Override
@@ -84,11 +83,31 @@ public class HostelFragment extends Fragment {
                 typeHebergement = editTextTypeHebergement.toString();
                 dateDebutReservationHebergement = editTextDateDebutReservationHebergement.toString();
                 dateFinReservationHebergement = editTextDateFinReservationHebergement.toString();
-                nbPersonnes = Integer.valueOf(editTextNbPersonnesHebergement.toString());
+                nbPersonnes = !editTextNbPersonnesHebergement.getText().toString().trim().isEmpty() ? (Integer.valueOf(editTextNbPersonnesHebergement.getText().toString())) : -1;
 
                 if (checkIfFormIsCorrect()) {
                     editTextMessageErreur.setVisibility(View.INVISIBLE);
-                    // do my request
+                    try {
+                        try {
+                            if (startRequest()) {
+                                Bundle args = new Bundle();
+                                args.putSerializable(HostelResultFragment.ITEMS, lstHostel);
+
+                                Fragment fragment = new HostelResultFragment();
+                                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                FragmentTransaction ft = fragmentManager.beginTransaction();
+                                fragment.setArguments(args);
+
+                                ft.replace(R.id.screenArea, fragment);
+                                ft.commit();
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
 
                 } else {
@@ -98,6 +117,69 @@ public class HostelFragment extends Fragment {
         });
 
     }
+
+    //requete https Hebergement
+
+    public boolean startRequest() throws IOException, JSONException {
+
+        if (askHostels()) {
+            return true;
+        }
+        Toast.makeText(this.getContext(), "Impossible de trouver des logements correspondants", Toast.LENGTH_SHORT).show();
+        return false;
+    }
+
+    private boolean askHostels() throws IOException, JSONException {
+        String requestGetListVilleHebergement = "https://192.168.214.11:5001/api/hebergement/findby/city/" + villeHebergement + "?token=7woAE69CqstvfvdeFLW8KA==";
+        URL url = new URL(requestGetListVilleHebergement);
+        HttpsURLConnection cnn = (HttpsURLConnection) url.openConnection();
+        cnn.setRequestMethod("GET");
+
+        InputStreamReader in = new InputStreamReader(cnn.getInputStream());
+
+        BufferedReader br = new BufferedReader(in);
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = br.readLine()) != null) {
+            sb.append(line + "\n");
+        }
+        br.close();
+
+        JSONArray jsonObject = new JSONArray(sb.toString());
+
+        try {
+            parseFlyJson(jsonObject);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lstHostel != null && lstHostel.length > 0;
+    }
+
+    private void parseFlyJson(JSONArray reader) throws JSONException {
+        HostelItem item;
+
+        int size = reader.length();
+
+        HostelItem[] listRes = new HostelItem[size];
+
+//        JSONObject obj = new JSONObject("result");
+        for (int i = 0; i < reader.length(); i++) {
+            item = new HostelItem(
+                    reader.getJSONObject(i).getString("id"),
+                    reader.getJSONObject(i).getString("nom"),
+                    reader.getJSONObject(i).getInt("etoile"),
+                    reader.getJSONObject(i).getDouble("prix"),
+                    reader.getJSONObject(i).getString("dateDebutBooked"),
+                    reader.getJSONObject(i).getString("dateFinBooked"),
+                    reader.getJSONObject(i).getString("adresse"),
+                    reader.getJSONObject(i).getString("ville"),
+                    reader.getJSONObject(i).getString("pays")
+            );
+            listRes[i] = item;
+        }
+        lstHostel = listRes;
+    }
+
 
     private boolean checkIfFormIsCorrect() {
         if (!paysHebergement.isEmpty() && !villeHebergement.isEmpty() && !typeHebergement.isEmpty() && !dateDebutReservationHebergement.isEmpty() && !dateFinReservationHebergement.isEmpty() && nbPersonnes > 0) {
