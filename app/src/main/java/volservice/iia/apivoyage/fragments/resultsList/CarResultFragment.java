@@ -18,6 +18,7 @@ import android.widget.Toast;
 import volservice.iia.apivoyage.R;
 import volservice.iia.apivoyage.adapters.CarAdapter;
 import volservice.iia.apivoyage.fragments.FlightFragment;
+import volservice.iia.apivoyage.fragments.MainFragment;
 import volservice.iia.apivoyage.fragments.RentACarFragment;
 import volservice.iia.apivoyage.items.CarItem;
 
@@ -70,7 +71,7 @@ public class CarResultFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Retour page de sélection
-                Fragment fragment = new FlightFragment();
+                Fragment fragment = new MainFragment();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction ft = fragmentManager.beginTransaction();
 

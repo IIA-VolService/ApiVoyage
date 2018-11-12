@@ -19,6 +19,7 @@ import volservice.iia.apivoyage.R;
 import volservice.iia.apivoyage.adapters.HostelAdapter;
 import volservice.iia.apivoyage.fragments.FlightFragment;
 import volservice.iia.apivoyage.fragments.HostelFragment;
+import volservice.iia.apivoyage.fragments.MainFragment;
 import volservice.iia.apivoyage.items.FlightItem;
 import volservice.iia.apivoyage.items.HostelItem;
 
@@ -67,7 +68,7 @@ public class HostelResultFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Retour page de sélection
-                Fragment fragment = new FlightFragment();
+                Fragment fragment = new MainFragment();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction ft = fragmentManager.beginTransaction();
 

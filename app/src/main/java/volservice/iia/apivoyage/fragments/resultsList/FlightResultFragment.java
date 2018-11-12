@@ -74,7 +74,7 @@ public class FlightResultFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Retour page de sélection
-                Fragment fragment = new FlightFragment();
+                Fragment fragment = new MainFragment();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction ft = fragmentManager.beginTransaction();
 
