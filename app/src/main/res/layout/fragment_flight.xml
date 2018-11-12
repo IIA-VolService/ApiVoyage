@@ -46,7 +46,7 @@
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:hint="Ville de départ"
-                android:text="Thirsk"
+                android:text="Cleveland"
                 android:textSize="15sp" />
 
         </LinearLayout>
@@ -70,7 +70,7 @@
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:hint="Ville d'arrivée"
-                android:text="Wipim"
+                android:text="Altai"
                 android:textSize="15sp" />
 
         </LinearLayout>
@@ -101,7 +101,7 @@
                 android:layout_width="227dp"
                 android:layout_height="40dp"
                 android:hint="01-01-2000"
-                android:text="06-04-2019"
+                android:text="29-11-2018"
                 android:textSize="15sp"
                 android:ems="10"
                 android:inputType="date" />
@@ -125,7 +125,7 @@
                 android:layout_width="227dp"
                 android:layout_height="40dp"
                 android:hint="01-01-2000"
-                android:text="16-05-2019"
+                android:text="04-01-2019"
                 android:textSize="15sp"
                 android:ems="10"
                 android:inputType="date" />

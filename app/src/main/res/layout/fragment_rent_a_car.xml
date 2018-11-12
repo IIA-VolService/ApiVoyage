@@ -138,7 +138,8 @@
                 android:textSize="15dp"
                 android:hint="Mercedes"
                 android:text="Mercedes"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:gravity="center"/>
 
         </LinearLayout>
 
