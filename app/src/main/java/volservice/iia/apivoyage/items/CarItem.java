@@ -9,6 +9,7 @@ import java.util.Date;
 public class CarItem implements Serializable {
 
     private static final long serialVersionUID = -2163051469151804394L;
+    private static int AUTO_ID = 1;
 
     private String modele;
     private String dateDebut;
@@ -22,13 +23,21 @@ public class CarItem implements Serializable {
     private int id;
     private EnumAPI api;
 
-    public CarItem(int id, EnumAPI enumAPI, String modele, int prix, String dateDebut, String dateFin, int nbPlaces, String localisation, String marque) {
-        this.id = id;
+    public CarItem(EnumAPI enumAPI, String modele, String prix, String dateDebut, String dateFin, int nbPlaces, String localisation, String marque) {
+        this.id = AUTO_ID++;
         this.api = enumAPI;
         this.modele = modele;
         this.prix = "" + prix;
-        this.classe = prix > 50 ? prix > 100 ? "PREMIMUM" : "AFFAIRE" : "ECONONIMQUE";
-        this.type = prix > 50 ? prix > 100 ? 1 : 2 : 3;
+        String calcPx = prix;
+        calcPx = calcPx.length() > 2 ? calcPx.substring(0, 3) : calcPx;
+        if (calcPx.contains(".")) {
+            if (calcPx.charAt(2) == '.') {
+                calcPx = calcPx.replace(".", "");
+            } else calcPx = calcPx.substring(0, 1);
+        }
+        int pxToCalc = Integer.valueOf(calcPx);
+        this.classe = pxToCalc > 100 ? pxToCalc > 200 ? "PREMIMUM" : "AFFAIRE" : "ECONONIMQUE";
+        this.type = pxToCalc > 100 ? pxToCalc > 200 ? 1 : 2 : 3;
         this.nbPlaces = String.valueOf(nbPlaces) + (nbPlaces > 1 ? "places" : "place");
         this.localisation = localisation;
         this.marque = marque;
@@ -41,8 +50,8 @@ public class CarItem implements Serializable {
             e.printStackTrace();
         }
         DateFormat formatterDay = new SimpleDateFormat("dd/MM/yyyy");
-        this.dateDebut = formatterDay.format(dateDebut);
-        this.dateFin = formatterDay.format(dateFin);
+        this.dateDebut = formatterDay.format(dateArr);
+        this.dateFin = formatterDay.format(dateRet);
     }
 
     public String getModeleAndPlaces() {

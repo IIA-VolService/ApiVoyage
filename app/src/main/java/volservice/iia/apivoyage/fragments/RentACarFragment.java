@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -49,14 +50,23 @@ public class RentACarFragment extends Fragment {
     private CarItem[] lstAPI01;
     private CarItem[] lstAPI02;
 
-
     //requetes https Voiture
     public boolean startRequest() throws IOException, JSONException {
+        lstAPI01 = null;
+        lstAPI02 = null;
+        if (askCarsAPI01() && askCarsAPI02()) {
+            if (lstAPI01.length > 0 || lstAPI02.length > 0) {
+                Bundle args = new Bundle();
+                args.putSerializable(CarResultFragment.ITEMS_API01, lstAPI01);
+                args.putSerializable(CarResultFragment.ITEMS_API02, lstAPI02);
 
-        if (askCarsAPI01()) {
-            if (askCarsAPI02()) {
-                return true;
+                Fragment fragment = new CarResultFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction ft = fragmentManager.beginTransaction();
+                fragment.setArguments(args);
 
+                ft.replace(R.id.screenArea, fragment);
+                ft.commit();
             } else {
                 Toast.makeText(this.getContext(), "Impossible de trouver les voitures correspondantes", Toast.LENGTH_SHORT).show();
                 return false;
@@ -64,7 +74,6 @@ public class RentACarFragment extends Fragment {
         }
         Toast.makeText(this.getContext(), "Impossible de trouver des voitures correspondantes", Toast.LENGTH_SHORT).show();
         return false;
-
     }
 
     /**
@@ -95,7 +104,7 @@ public class RentACarFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return lstAPI01 != null && lstAPI01.length > 0;
+        return lstAPI01 != null;
     }
 
     private void parseFlyJsonAPI01(JSONArray reader) throws JSONException {
@@ -107,10 +116,9 @@ public class RentACarFragment extends Fragment {
 
         for (int i = 0; i < size; i++) {
             item = new CarItem(
-                    i,
                     EnumAPI.API01,
                     reader.getJSONObject(i).getString("modele"),
-                    Integer.valueOf(reader.getJSONObject(i).getString("prix")),
+                    reader.getJSONObject(i).getString("prixReservation"),
                     dateDebutReservationLocation,
                     dateFinReservationLocation,
                     Integer.valueOf(reader.getJSONObject(i).getString("nbPassager")),
@@ -129,31 +137,12 @@ public class RentACarFragment extends Fragment {
      * @return bool
      */
     private boolean askCarsAPI02() throws JSONException, IOException {
-        int idMarque;
-        int nbCar;
-        ArrayList<Integer> idModel;
-        JSONArray jsonArray = new JSONArray(getSbForRequest("https://192.168.214.31/brandname/read.php?token=SZAdlqfwCdb18CzUads4tLTqN6EaLRlr").toString());
-
+        ArrayList<Integer> nbMaxIdCar;
+        JSONArray jsonArray = new JSONArray(getSbForRequest("https://192.168.214.31/car/read.php?token=SZAdlqfwCdb18CzUads4tLTqN6EaLRlr").toString());
         try {
-            idMarque = askForMarqueId(jsonArray);
-            if (idMarque != -1) {
-                jsonArray = new JSONArray(getSbForRequest("https://192.168.214.31/model/read.php?token=SZAdlqfwCdb18CzUads4tLTqN6EaLRlr").toString());
-                idModel = askForAllModels(jsonArray, idMarque);
-                if (idModel != null) {
-                    jsonArray = new JSONArray(getSbForRequest("https://192.168.214.31/brandname/read_one.php?token=SZAdlqfwCdb18CzUads4tLTqN6EaLRlr&idBrandName=" + idMarque).toString());
-                    nbCar = askForIdCar(jsonArray);
-                    if (nbCar > 0) {
-                        jsonArray = new JSONArray(getSbForRequest("https://192.168.214.31/car/read.php?token=SZAdlqfwCdb18CzUads4tLTqN6EaLRlr").toString());
-                        parseFlyJsonAPI02(jsonArray, idMarque, nbCar);
-
-                    } else {
-                        lstAPI02 = new CarItem[0];
-                        return true;
-                    }
-                } else {
-                    lstAPI02 = new CarItem[0];
-                    return true;
-                }
+            nbMaxIdCar = askForAllAvailableCars(jsonArray);
+            if (!nbMaxIdCar.isEmpty()) {
+                parseFlyJsonAPI02(nbMaxIdCar);
             } else {
                 lstAPI02 = new CarItem[0];
                 return true;
@@ -161,32 +150,36 @@ public class RentACarFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return lstAPI02 != null;
     }
 
-    private void parseFlyJsonAPI02(JSONArray reader, int idCar, int nbCar) throws JSONException {
+    private void parseFlyJsonAPI02(ArrayList<Integer> idCar) throws JSONException, IOException {
         CarItem item;
-
-        int size = reader.length();
-
-        CarItem[] listRes = new CarItem[nbCar];
-
-        for (int i = 0; i < size; i++) {
+        JSONObject jsonObject;
+        ArrayList<CarItem> listRes = new ArrayList<CarItem>();
+        for (Integer id : idCar) {
+            jsonObject = new JSONObject(getSbForRequest("https://192.168.214.31/car/read_one_formatted.php?token=SZAdlqfwCdb18CzUads4tLTqN6EaLRlr&id=" + id).toString());
+            if (jsonObject.getString("brandname").compareToIgnoreCase(marqueVoiture) == 0) {
                 item = new CarItem(
-                        i,
                         EnumAPI.API02,
-                        reader.getJSONObject(i).getString("modele"),
-                        Integer.valueOf(reader.getJSONObject(i).getString("prix")),
+                        jsonObject.getString("brandname"),
+                        jsonObject.getString("price"),
                         dateDebutReservationLocation,
                         dateFinReservationLocation,
-                        Integer.valueOf(reader.getJSONObject(i).getString("nbPassager")),
-                        reader.getJSONObject(i).getString("localisation"),
-                        reader.getJSONObject(i).getString("marque")
-                );
-            listRes[i] = item;
+                        5,
+                        jsonObject.getString("agency"),
+                        jsonObject.getString("model"));
+                listRes.add(item);
+            }
         }
-        lstAPI01 = listRes;
+        if (!listRes.isEmpty()) {
+            CarItem[] items = new CarItem[listRes.size()];
+            int i = 0;
+            for (CarItem carItem : listRes) {
+                items[i++] = carItem;
+            }
+            lstAPI02 = items;
+        } else lstAPI02 = new CarItem[0];
     }
 
     private StringBuilder getSbForRequest(String s) throws IOException {
@@ -205,35 +198,12 @@ public class RentACarFragment extends Fragment {
         return sb;
     }
 
-    private int askForMarqueId(JSONArray reader) throws JSONException {
-        int size = reader.length();
-        for (int i = 0; i < size; i++) {
-            if (reader.getJSONObject(i).getString("name").toLowerCase().trim().equals(marqueVoiture.toLowerCase().trim())) {
-                return reader.getJSONObject(i).getInt("id");
-            }
-        }
-        return -1;
-    }
-
-    private int askForIdCar(JSONArray reader) throws JSONException {
-        int size = reader.length();
-        for (int i = 0; i < size; i++) {
-            if (reader.getJSONObject(i).getString("name").toLowerCase().trim().equals(marqueVoiture.toLowerCase().trim())) {
-                return reader.getJSONObject(i).getInt("id");
-            }
-        }
-        return -1;
-    }
-
-    private ArrayList<Integer> askForAllModels(JSONArray reader, int idMarque) throws JSONException {
-        int size = reader.length();
+    private ArrayList<Integer> askForAllAvailableCars(JSONArray reader) throws JSONException {
         ArrayList<Integer> result = new ArrayList<Integer>();
-        for (int i = 0; i < size; i++) {
-            if (reader.getJSONObject(i).getInt("idBrandName") == idMarque) {
-                result.add(reader.getJSONObject(i).getInt("id"));
-            }
+        for (int i = 0; i < reader.length(); i++) {
+            result.add(reader.getJSONObject(i).getInt("id"));
         }
-        return result.isEmpty() ? null : result;
+        return result;
     }
 
     @Nullable
@@ -249,7 +219,7 @@ public class RentACarFragment extends Fragment {
         editTextVilleLocation = view.findViewById(R.id.editTextVilleVoiture);
         editTextDateDebutReservationLocation = view.findViewById(R.id.editTextDebutReservationVoiture);
         editTextDateFinReservationLocation = view.findViewById(R.id.editTextFinReservationVoiture);
-        editTextTypeVoiture = view.findViewById(R.id.editTextTypeVoiture);
+        editTextTypeVoiture = view.findViewById(R.id.editTextMArqueVoiture);
 
         btnSearch = view.findViewById(R.id.car_btn_search);
         editTextMessageErreur = view.findViewById(R.id.MessageErreur);
@@ -282,7 +252,6 @@ public class RentACarFragment extends Fragment {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
 
                 } else {
                     editTextMessageErreur.setVisibility(View.VISIBLE);
