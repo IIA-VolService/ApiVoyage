@@ -98,7 +98,12 @@ public class FlightFragment extends Fragment {
         }
         br.close();
 
-        JSONObject jsonObject = new JSONObject(sb.toString());
+        JSONObject jsonObject;
+        if (!sb.toString().isEmpty())
+            jsonObject = new JSONObject(sb.toString());
+        else{
+            return false;
+        }
 
         try {
             parseFlyJson(jsonObject, false);

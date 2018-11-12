@@ -33,6 +33,7 @@ import volservice.iia.apivoyage.adapters.FlightAdapter;
 import volservice.iia.apivoyage.fragments.FlightFragment;
 import volservice.iia.apivoyage.fragments.HostelFragment;
 import volservice.iia.apivoyage.fragments.MainFragment;
+import volservice.iia.apivoyage.fragments.thankYouFragment;
 import volservice.iia.apivoyage.items.FlightItem;
 import volservice.iia.apivoyage.items.HostelItem;
 
@@ -130,7 +131,7 @@ public class FlightResultFragment extends Fragment {
                     sendPostAller();
                     sendPostRetour();
                     Toast.makeText(v.getContext(), getString(R.string.txt_toast_success), Toast.LENGTH_SHORT).show();
-                    fragment = new MainFragment();
+                    fragment = new thankYouFragment();
                 }
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -183,7 +184,7 @@ public class FlightResultFragment extends Fragment {
                     conn.setDoInput(true);
 
                     JSONObject jsonParam = new JSONObject();
-                    jsonParam.put("id", itemAller.getId());
+                    jsonParam.put("idVol", itemAller.getId());
                     jsonParam.put("nom", "DOE");
                     jsonParam.put("prenom", "JOE");
                     jsonParam.put("token", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.FgKm8JNIbbmf-KLFZbQI9NGo_3S3NoIjprvPLISlh0c");
@@ -229,7 +230,7 @@ public class FlightResultFragment extends Fragment {
                     conn.setDoInput(true);
 
                     JSONObject jsonParam = new JSONObject();
-                    jsonParam.put("id", itemRetour.getId());
+                    jsonParam.put("idVol", itemRetour.getId());
                     jsonParam.put("nom", "DOE");
                     jsonParam.put("prenom", "JOE");
                     jsonParam.put("token", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.FgKm8JNIbbmf-KLFZbQI9NGo_3S3NoIjprvPLISlh0c");

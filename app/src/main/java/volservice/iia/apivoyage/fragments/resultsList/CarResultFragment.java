@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -28,6 +29,7 @@ import volservice.iia.apivoyage.R;
 import volservice.iia.apivoyage.adapters.CarAdapter;
 import volservice.iia.apivoyage.fragments.MainFragment;
 import volservice.iia.apivoyage.fragments.RentACarFragment;
+import volservice.iia.apivoyage.fragments.thankYouFragment;
 import volservice.iia.apivoyage.items.CarItem;
 
 public class CarResultFragment extends Fragment {
@@ -97,7 +99,7 @@ public class CarResultFragment extends Fragment {
 
 
                 Toast.makeText(v.getContext(), getString(R.string.txt_toast_success), Toast.LENGTH_SHORT).show();
-                Fragment fragment = new MainFragment();
+                Fragment fragment = new thankYouFragment();
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction ft = fragmentManager.beginTransaction();
@@ -141,13 +143,15 @@ public class CarResultFragment extends Fragment {
                     jsonParam.put("prixReservation", itemSelected.getPrix());
                     jsonParam.put("localisation", itemSelected.getLocalisation());
 
+                    JSONArray array = new JSONArray();
                     JSONObject reservations = new JSONObject();
                     reservations.put("nomResa", "JOE");
                     reservations.put("prenomResa", "WOLOLO");
                     reservations.put("numeroPermisResa", "777777777777");
                     reservations.put("dateDebutReservation", itemSelected.getDateDebut());
                     reservations.put("dateFinReservation", itemSelected.getDateFin());
-                    jsonParam.put("reservations", reservations);
+                    array.put(reservations);
+                    jsonParam.put("reservations", array);
 
                     DataOutputStream os = new DataOutputStream(conn.getOutputStream());
                     os.writeBytes(jsonParam.toString());

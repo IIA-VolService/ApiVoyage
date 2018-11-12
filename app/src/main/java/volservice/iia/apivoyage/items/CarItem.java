@@ -39,7 +39,7 @@ public class CarItem implements Serializable {
             } else calcPx = calcPx.substring(0, 1);
         }
         int pxToCalc = Integer.valueOf(calcPx);
-        this.classe = pxToCalc > 100 ? pxToCalc > 200 ? "PREMIUM" : "AFFAIRE" : "ECONONIMQUE";
+        this.classe = pxToCalc > 100 ? pxToCalc > 200 ? "PREMIUM" : "AFFAIRE" : "ECO";
         this.type = pxToCalc > 100 ? pxToCalc > 200 ? 1 : 2 : 3;
         this.nbPlaces = String.valueOf(nbPlaces) + (nbPlaces > 1 ? "places" : "place");
         this.localisation = localisation;

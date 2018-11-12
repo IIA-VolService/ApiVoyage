@@ -47,5 +47,8 @@
     <string name="txt_hostel_list_title">Choisissez un hôtel</string>
     <string name="txt_car_list_title">Choisissez un véhicule</string>
 
+    <string name="txt_thx">Merci d\'avoir réservé en utilisant l\'application : \n\nUn voyage de rêve</string>
+
+
 
 </resources>

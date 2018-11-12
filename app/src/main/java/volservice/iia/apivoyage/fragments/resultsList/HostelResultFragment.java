@@ -27,6 +27,7 @@ import javax.net.ssl.HttpsURLConnection;
 import volservice.iia.apivoyage.R;
 import volservice.iia.apivoyage.adapters.HostelAdapter;
 import volservice.iia.apivoyage.fragments.HostelFragment;
+import volservice.iia.apivoyage.fragments.thankYouFragment;
 import volservice.iia.apivoyage.items.HostelItem;
 
 public class HostelResultFragment extends Fragment {
@@ -187,7 +188,7 @@ public class HostelResultFragment extends Fragment {
 
     private void afterRequest() {
         Toast.makeText(this.getContext(), getString(R.string.txt_toast_success), Toast.LENGTH_SHORT).show();
-        Fragment fragment = new HostelFragment();
+        Fragment fragment = new thankYouFragment();
 
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
