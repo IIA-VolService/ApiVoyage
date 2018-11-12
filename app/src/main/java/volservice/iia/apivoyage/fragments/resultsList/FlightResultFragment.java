@@ -102,6 +102,7 @@ public class FlightResultFragment extends Fragment {
                 FragmentTransaction ft = fragmentManager.beginTransaction();
 
                 ft.replace(R.id.screenArea, fragment);
+                ft.addToBackStack(null);
                 ft.commit();
             }
         });
@@ -137,6 +138,7 @@ public class FlightResultFragment extends Fragment {
                 if (bundle != null)
                     fragment.setArguments(bundle);
                 ft.replace(R.id.screenArea, fragment);
+                ft.addToBackStack(null);
                 ft.commit();
             }
         });
@@ -190,6 +192,18 @@ public class FlightResultFragment extends Fragment {
                     DataOutputStream os = new DataOutputStream(conn.getOutputStream());
                     os.writeBytes(jsonParam.toString());
 
+                    InputStreamReader in = new InputStreamReader(conn.getInputStream());
+
+                    BufferedReader br = new BufferedReader(in);
+                    StringBuilder sb = new StringBuilder();
+                    String line;
+                    while ((line = br.readLine()) != null) {
+                        sb.append(line + "\n");
+                    }
+                    br.close();
+
+                    System.out.println(sb.toString());
+
                     os.flush();
                     os.close();
 
@@ -223,6 +237,18 @@ public class FlightResultFragment extends Fragment {
 
                     DataOutputStream os = new DataOutputStream(conn.getOutputStream());
                     os.writeBytes(jsonParam.toString());
+
+                    InputStreamReader in = new InputStreamReader(conn.getInputStream());
+
+                    BufferedReader br = new BufferedReader(in);
+                    StringBuilder sb = new StringBuilder();
+                    String line;
+                    while ((line = br.readLine()) != null) {
+                        sb.append(line + "\n");
+                    }
+                    br.close();
+
+                    System.out.println(sb.toString());
 
                     os.flush();
                     os.close();

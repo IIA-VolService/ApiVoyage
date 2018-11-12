@@ -23,7 +23,10 @@ public class CarItem implements Serializable {
     private int id;
     private EnumAPI api;
 
-    public CarItem(EnumAPI enumAPI, String modele, String prix, String dateDebut, String dateFin, int nbPlaces, String localisation, String marque) {
+    private int idCar;
+
+    public CarItem(EnumAPI enumAPI, String modele, String prix, String dateDebut, String dateFin, int nbPlaces, String localisation, String marque, int idCar) {
+        this.idCar = idCar;
         this.id = AUTO_ID++;
         this.api = enumAPI;
         this.modele = modele;
@@ -104,5 +107,9 @@ public class CarItem implements Serializable {
 
     public EnumAPI getApi() {
         return api;
+    }
+
+    public int getIdCar() {
+        return idCar;
     }
 }

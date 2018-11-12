@@ -66,13 +66,15 @@ public class RentACarFragment extends Fragment {
                 fragment.setArguments(args);
 
                 ft.replace(R.id.screenArea, fragment);
+                ft.addToBackStack(null);
                 ft.commit();
+                return true;
             } else {
                 Toast.makeText(this.getContext(), "Impossible de trouver les voitures correspondantes", Toast.LENGTH_SHORT).show();
                 return false;
             }
         }
-        Toast.makeText(this.getContext(), "Impossible de trouver des voitures correspondantes", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this.getContext(), "toast  2 Impossible de trouver des voitures correspondantes", Toast.LENGTH_SHORT).show();
         return false;
     }
 
@@ -123,7 +125,8 @@ public class RentACarFragment extends Fragment {
                     dateFinReservationLocation,
                     Integer.valueOf(reader.getJSONObject(i).getString("nbPassager")),
                     reader.getJSONObject(i).getString("localisation"),
-                    reader.getJSONObject(i).getString("marque")
+                    reader.getJSONObject(i).getString("marque"),
+                    0
             );
             listRes[i] = item;
         }
@@ -137,12 +140,12 @@ public class RentACarFragment extends Fragment {
      * @return bool
      */
     private boolean askCarsAPI02() throws JSONException, IOException {
-        ArrayList<Integer> nbMaxIdCar;
+        ArrayList<Integer> listIdCar;
         JSONArray jsonArray = new JSONArray(getSbForRequest("https://192.168.214.31/car/read.php?token=SZAdlqfwCdb18CzUads4tLTqN6EaLRlr").toString());
         try {
-            nbMaxIdCar = askForAllAvailableCars(jsonArray);
-            if (!nbMaxIdCar.isEmpty()) {
-                parseFlyJsonAPI02(nbMaxIdCar);
+            listIdCar = askForAllAvailableCars(jsonArray);
+            if (!listIdCar.isEmpty()) {
+                parseFlyJsonAPI02(listIdCar);
             } else {
                 lstAPI02 = new CarItem[0];
                 return true;
@@ -159,7 +162,7 @@ public class RentACarFragment extends Fragment {
         ArrayList<CarItem> listRes = new ArrayList<CarItem>();
         for (Integer id : idCar) {
             jsonObject = new JSONObject(getSbForRequest("https://192.168.214.31/car/read_one_formatted.php?token=SZAdlqfwCdb18CzUads4tLTqN6EaLRlr&id=" + id).toString());
-            if (jsonObject.getString("brandname").compareToIgnoreCase(marqueVoiture) == 0) {
+            if (jsonObject.getString("model").toLowerCase().trim().matches(marqueVoiture.toLowerCase().trim())) {
                 item = new CarItem(
                         EnumAPI.API02,
                         jsonObject.getString("brandname"),
@@ -168,7 +171,9 @@ public class RentACarFragment extends Fragment {
                         dateFinReservationLocation,
                         5,
                         jsonObject.getString("agency"),
-                        jsonObject.getString("model"));
+                        jsonObject.getString("model"),
+                        id
+                );
                 listRes.add(item);
             }
         }
@@ -235,18 +240,7 @@ public class RentACarFragment extends Fragment {
                 if (checkIfFormIsCorrect()) {
                     editTextMessageErreur.setVisibility(View.INVISIBLE);
                     try {
-                        if (startRequest()) {
-                            Bundle args = new Bundle();
-                            args.putSerializable(CarResultFragment.ITEMS_API01, lstAPI01);
-                            args.putSerializable(CarResultFragment.ITEMS_API02, lstAPI02);
-                            Fragment fragment = new HostelResultFragment();
-                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                            FragmentTransaction ft = fragmentManager.beginTransaction();
-                            fragment.setArguments(args);
-
-                            ft.replace(R.id.screenArea, fragment);
-                            ft.commit();
-                        }
+                        startRequest();
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (JSONException e) {

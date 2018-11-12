@@ -91,6 +91,7 @@ public class HostelFragment extends Fragment {
                                 fragment.setArguments(args);
 
                                 ft.replace(R.id.screenArea, fragment);
+                                ft.addToBackStack(null);
                                 ft.commit();
                             }
                         } catch (JSONException e) {

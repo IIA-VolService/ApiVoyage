@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction ft = fragmentManager.beginTransaction();
 
         ft.replace(R.id.screenArea, fragment);
+        ft.addToBackStack(null);
         ft.commit();
     }
 
@@ -159,7 +160,7 @@ public class MainActivity extends AppCompatActivity
             FragmentTransaction ft = fragmentManager.beginTransaction();
 
             ft.replace(R.id.screenArea, fragment);
-
+            ft.addToBackStack(null);
             ft.commit();
         }
 

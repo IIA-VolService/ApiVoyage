@@ -247,6 +247,7 @@ public class FlightFragment extends Fragment {
                             fragment.setArguments(args);
 
                             ft.replace(R.id.screenArea, fragment);
+                            ft.addToBackStack(null);
                             ft.commit();
                         }
                     } catch (IOException e) {

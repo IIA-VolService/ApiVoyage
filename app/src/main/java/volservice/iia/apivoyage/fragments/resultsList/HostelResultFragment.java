@@ -1,6 +1,5 @@
 package volservice.iia.apivoyage.fragments.resultsList;
 
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,32 +7,26 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
 import volservice.iia.apivoyage.R;
 import volservice.iia.apivoyage.adapters.HostelAdapter;
-import volservice.iia.apivoyage.fragments.FlightFragment;
 import volservice.iia.apivoyage.fragments.HostelFragment;
-import volservice.iia.apivoyage.fragments.MainFragment;
-import volservice.iia.apivoyage.items.FlightItem;
 import volservice.iia.apivoyage.items.HostelItem;
 
 public class HostelResultFragment extends Fragment {
@@ -87,6 +80,7 @@ public class HostelResultFragment extends Fragment {
                 FragmentTransaction ft = fragmentManager.beginTransaction();
 
                 ft.replace(R.id.screenArea, fragment);
+                ft.addToBackStack(null);
                 ft.commit();
             }
         });
@@ -167,6 +161,18 @@ public class HostelResultFragment extends Fragment {
                         //os.writeBytes(URLEncoder.encode(jsonParam.toString(), "UTF-8"));
                         os.writeBytes(jsonParam.toString());
 
+                        InputStreamReader in = new InputStreamReader(conn.getInputStream());
+
+                        BufferedReader br = new BufferedReader(in);
+                        StringBuilder sb = new StringBuilder();
+                        String line;
+                        while ((line = br.readLine()) != null) {
+                            sb.append(line + "\n");
+                        }
+                        br.close();
+
+                        System.out.println(sb.toString());
+
                         os.flush();
                         os.close();
                     }
@@ -187,6 +193,7 @@ public class HostelResultFragment extends Fragment {
         FragmentTransaction ft = fragmentManager.beginTransaction();
 
         ft.replace(R.id.screenArea, fragment);
+        ft.addToBackStack(null);
         ft.commit();
     }
 

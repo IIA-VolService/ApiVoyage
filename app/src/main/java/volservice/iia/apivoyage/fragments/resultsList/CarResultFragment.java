@@ -67,7 +67,7 @@ public class CarResultFragment extends Fragment {
 
         final CarItem[] items = getList(items01, items02);
 
-        listView.setAdapter(new CarAdapter(view.getContext(), items01));
+        listView.setAdapter(new CarAdapter(view.getContext(), items));
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -85,6 +85,7 @@ public class CarResultFragment extends Fragment {
                 FragmentTransaction ft = fragmentManager.beginTransaction();
 
                 ft.replace(R.id.screenArea, fragment);
+                ft.addToBackStack(null);
                 ft.commit();
             }
         });
@@ -102,6 +103,7 @@ public class CarResultFragment extends Fragment {
                 FragmentTransaction ft = fragmentManager.beginTransaction();
 
                 ft.replace(R.id.screenArea, fragment);
+                ft.addToBackStack(null);
                 ft.commit();
             }
         });
@@ -127,7 +129,7 @@ public class CarResultFragment extends Fragment {
                 try {
                     URL url = new URL("https://192.168.214.23:5001/api/VoitureReservation/Reserver");
                     HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
-                    conn.setRequestMethod("PUT");
+                    conn.setRequestMethod("POST");
                     conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
                     conn.setDoOutput(true);
                     conn.setDoInput(true);
@@ -145,6 +147,7 @@ public class CarResultFragment extends Fragment {
                     reservations.put("numeroPermisResa", "777777777777");
                     reservations.put("dateDebutReservation", itemSelected.getDateDebut());
                     reservations.put("dateFinReservation", itemSelected.getDateFin());
+                    jsonParam.put("reservations", reservations);
 
                     DataOutputStream os = new DataOutputStream(conn.getOutputStream());
                     os.writeBytes(jsonParam.toString());
@@ -174,6 +177,48 @@ public class CarResultFragment extends Fragment {
     }
 
     private void postApi02() {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("https://192.168.214.31/car/rent.php?token=SZAdlqfwCdb18CzUads4tLTqN6EaLRlr");
+                    HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+                    conn.setRequestMethod("PUT");
+                    conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+                    conn.setDoOutput(true);
+                    conn.setDoInput(true);
+
+                    JSONObject jsonParam = new JSONObject();
+                    jsonParam.put("id", itemSelected.getIdCar());
+                    jsonParam.put("idCustomer", 25);
+                    jsonParam.put("dateDebutLoc", itemSelected.getDateDebut());
+                    jsonParam.put("dateFinLoc", itemSelected.getDateFin());
+
+                    DataOutputStream os = new DataOutputStream(conn.getOutputStream());
+                    os.writeBytes(jsonParam.toString());
+
+                    os.flush();
+                    os.close();
+
+                    InputStreamReader in = new InputStreamReader(conn.getInputStream());
+
+                    BufferedReader br = new BufferedReader(in);
+                    StringBuilder sb = new StringBuilder();
+                    String line;
+                    while ((line = br.readLine()) != null) {
+                        sb.append(line + "\n");
+                    }
+                    br.close();
+
+                    System.out.println(sb.toString());
+
+                    conn.disconnect();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
     }
 
     private CarItem[] getList(CarItem[] items01, CarItem[] items02) {
