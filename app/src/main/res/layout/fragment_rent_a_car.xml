@@ -41,9 +41,10 @@
 
             <EditText
                 android:id="@+id/editTextVilleVoiture"
-                android:layout_width="229dp"
+                android:layout_width="210dp"
                 android:layout_height="40dp"
                 android:hint="Paris"
+                android:text = "Paris"
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:textSize="15sp" />
@@ -73,9 +74,11 @@
 
             <EditText
                 android:id="@+id/editTextDebutReservationVoiture"
-                android:layout_width="150dp"
-                android:layout_height="33dp"
+                android:layout_width="210dp"
+                android:layout_height="40dp"
                 android:hint="01-01-2018"
+                android:text = "12-11-2018"
+                android:textSize="15dp"
                 android:ems="10"
                 android:inputType="date" />
 
@@ -95,9 +98,11 @@
 
             <EditText
                 android:id="@+id/editTextFinReservationVoiture"
-                android:layout_width="150dp"
-                android:layout_height="33dp"
+                android:layout_width="210dp"
+                android:layout_height="40dp"
                 android:hint="01-01-2018"
+                android:text = "15-11-2018"
+                android:textSize="15dp"
                 android:ems="10"
 
                 android:inputType="date" />
@@ -122,14 +127,17 @@
             <TextView
                 android:layout_width="150dp"
                 android:layout_height="36dp"
-                android:text="Type de voiture :"
+                android:text="Marque de voiture :"
                 android:gravity="center" />
 
             <EditText
-                android:id="@+id/editTextTypeVoiture"
+                android:id="@+id/editTextMArqueVoiture"
                 android:layout_width="150dp"
                 android:layout_height="36dp"
                 android:ems="10"
+                android:textSize="15dp"
+                android:hint="Mercedes"
+                android:text="Mercedes"
                 android:inputType="textPersonName" />
 
         </LinearLayout>
