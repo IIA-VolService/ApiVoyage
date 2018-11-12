@@ -44,6 +44,7 @@
                 android:layout_width="229dp"
                 android:layout_height="40dp"
                 android:hint="France"
+                android:text = "Argentina"
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:textSize="15sp" />
@@ -67,6 +68,7 @@
                 android:layout_width="229dp"
                 android:layout_height="40dp"
                 android:hint="Paris"
+                android:text = "Bath"
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:textSize="15sp" />
@@ -99,6 +101,7 @@
                 android:layout_width="210dp"
                 android:layout_height="40dp"
                 android:hint="01-01-2018"
+                android:text = "12-11-2018"
                 android:textSize="15sp"
                 android:ems="10"
                 android:inputType="date" />
@@ -122,6 +125,7 @@
                 android:layout_width="210dp"
                 android:layout_height="40dp"
                 android:hint="01-01-2018"
+                android:text = "15-11-2018"
                 android:textSize="15sp"
                 android:ems="10"
 
@@ -156,6 +160,7 @@
                 android:layout_height="36dp"
                 android:hint="2"
                 android:textSize="15sp"
+                android:text = "2"
                 android:ems="10"
                 android:inputType="number"
                 android:gravity="center" />
