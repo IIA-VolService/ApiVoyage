@@ -44,7 +44,6 @@
                 android:layout_width="229dp"
                 android:layout_height="40dp"
                 android:hint="Paris"
-                android:hintSize = "15"
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:textSize="15sp" />
@@ -76,6 +75,7 @@
                 android:id="@+id/editTextDebutReservationVoiture"
                 android:layout_width="150dp"
                 android:layout_height="33dp"
+                android:hint="01-01-2018"
                 android:ems="10"
                 android:inputType="date" />
 
@@ -97,6 +97,7 @@
                 android:id="@+id/editTextFinReservationVoiture"
                 android:layout_width="150dp"
                 android:layout_height="33dp"
+                android:hint="01-01-2018"
                 android:ems="10"
 
                 android:inputType="date" />
