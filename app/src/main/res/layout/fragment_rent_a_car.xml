@@ -49,28 +49,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="94dp"
-                android:layout_height="35dp"
-                android:text="Agence :"
-                android:gravity="center" />
-
-            <EditText
-                android:id="@+id/editTextAgenceVoiture"
-                android:layout_width="229dp"
-                android:layout_height="35dp"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:textSize="15sp" />
-
-        </LinearLayout>
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

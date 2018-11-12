@@ -42,8 +42,8 @@ public class RentACarFragment extends Fragment {
 
     public void startRequest() throws IOException {
 
-        String urlLink = "";
-        URL url = new URL(urlLink);
+        String getListVoiture = "https://192.168.214.23:5001/api/VoitureReservation/localisation/" + villeLocation;
+        URL url = new URL(getListVoiture);
         HttpsURLConnection cnn = (HttpsURLConnection) url.openConnection();
         cnn.setRequestMethod("GET");
 
