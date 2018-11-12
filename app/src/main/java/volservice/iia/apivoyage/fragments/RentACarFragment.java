@@ -4,21 +4,22 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-
-import javax.net.ssl.HttpsURLConnection;
 
 import volservice.iia.apivoyage.R;
+import volservice.iia.apivoyage.fragments.resultsList.CarResultFragment;
+import volservice.iia.apivoyage.fragments.resultsList.HostelResultFragment;
+import volservice.iia.apivoyage.items.CarItem;
 
 public class RentACarFragment extends Fragment {
 
@@ -37,20 +38,33 @@ public class RentACarFragment extends Fragment {
     private String dateDebutReservationLocation;
     private String dateFinReservationLocation;
 
+    private CarItem[] lstAPI01;
+    private CarItem[] lstAPI02;
 
-    //requete https Voiture
 
-    public void startRequest() throws IOException {
+    //requetes https Voiture
+    public boolean startRequest() throws IOException {
 
-        String getListVoiture = "https://192.168.214.23:5001/api/VoitureReservation/localisation/" + villeLocation;
-        URL url = new URL(getListVoiture);
-        HttpsURLConnection cnn = (HttpsURLConnection) url.openConnection();
-        cnn.setRequestMethod("GET");
+        if (askCarsAPI01()) {
+            if (askCarsAPI02()) {
+                return true;
 
-        BufferedReader in = new BufferedReader(new InputStreamReader(cnn.getInputStream()));
+            } else {
+                Toast.makeText(this.getContext(), "Impossible de trouver les voitures correspondantes", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        }
+        Toast.makeText(this.getContext(), "Impossible de trouver des voitures correspondantes", Toast.LENGTH_SHORT).show();
+        return false;
 
-        StringBuffer sb = new StringBuffer();
+    }
 
+    private boolean askCarsAPI01() {
+        return false;
+    }
+
+    private boolean askCarsAPI02() {
+        return false;
     }
 
     @Nullable
@@ -82,7 +96,22 @@ public class RentACarFragment extends Fragment {
 
                 if (checkIfFormIsCorrect()) {
                     editTextMessageErreur.setVisibility(View.INVISIBLE);
-                    // do my request
+                    try {
+                        if (startRequest()) {
+                            Bundle args = new Bundle();
+                            args.putSerializable(CarResultFragment.ITEMS_API01, lstAPI01);
+                            args.putSerializable(CarResultFragment.ITEMS_API02, lstAPI02);
+                            Fragment fragment = new HostelResultFragment();
+                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                            FragmentTransaction ft = fragmentManager.beginTransaction();
+                            fragment.setArguments(args);
+
+                            ft.replace(R.id.screenArea, fragment);
+                            ft.commit();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
 
                 } else {

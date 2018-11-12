@@ -71,10 +71,10 @@ public class HostelFragment extends Fragment {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                paysHebergement = editTextPaysHebergement.toString();
-                villeHebergement = editTextVilleHebergement.toString();
-                dateDebutReservationHebergement = editTextDateDebutReservationHebergement.toString();
-                dateFinReservationHebergement = editTextDateFinReservationHebergement.toString();
+                paysHebergement = editTextPaysHebergement.getText().toString();
+                villeHebergement = editTextVilleHebergement.getText().toString();
+                dateDebutReservationHebergement = editTextDateDebutReservationHebergement.getText().toString();
+                dateFinReservationHebergement = editTextDateFinReservationHebergement.getText().toString();
                 nbPersonnes = !editTextNbPersonnesHebergement.getText().toString().trim().isEmpty() ? (Integer.valueOf(editTextNbPersonnesHebergement.getText().toString())) : -1;
 
                 if (checkIfFormIsCorrect()) {
@@ -92,7 +92,6 @@ public class HostelFragment extends Fragment {
 
                                 ft.replace(R.id.screenArea, fragment);
                                 ft.commit();
-
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -137,10 +136,10 @@ public class HostelFragment extends Fragment {
         }
         br.close();
 
-        JSONArray jsonObject = new JSONArray(sb.toString());
+        JSONArray jsonArray = new JSONArray(sb.toString());
 
         try {
-            parseFlyJson(jsonObject);
+            parseFlyJson(jsonArray);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -152,10 +151,10 @@ public class HostelFragment extends Fragment {
 
         int size = reader.length();
 
-        HostelItem[] listRes = new HostelItem[size];
+        if (size == 0) return;
 
-//        JSONObject obj = new JSONObject("result");
-        for (int i = 0; i < reader.length(); i++) {
+        HostelItem[] listRes = new HostelItem[size];
+        for (int i = 0; i < size; i++) {
             item = new HostelItem(
                     reader.getJSONObject(i).getString("id"),
                     reader.getJSONObject(i).getString("nom"),

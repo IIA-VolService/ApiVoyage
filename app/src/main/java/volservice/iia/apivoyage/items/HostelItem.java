@@ -33,8 +33,8 @@ public class HostelItem implements Serializable {
         Date dateArr = null;
         Date dateRet = null;
         try {
-            dateArr = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(dateDebut);
-            dateRet = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(dateFin);
+            dateArr = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(dateDebut.replace('T', ' '));
+            dateRet = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(dateFin.replace('T', ' '));
         } catch (ParseException e) {
             e.printStackTrace();
         }

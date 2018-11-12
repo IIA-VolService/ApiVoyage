@@ -23,7 +23,8 @@ import volservice.iia.apivoyage.items.CarItem;
 
 public class CarResultFragment extends Fragment {
 
-    private final static String ITEMS = "ITEMS";
+    public final static String ITEMS_API01 = "ITEMS_API01";
+    public final static String ITEMS_API02 = "ITEMS_API02";
 
     private Bundle arguments;
 
@@ -51,8 +52,12 @@ public class CarResultFragment extends Fragment {
         btnValid.setActivated(false);
 
         btnValid.setText(getString(R.string.txt_btn_select));
-        final CarItem[] items = (CarItem[]) arguments.getSerializable(ITEMS);
-        listView.setAdapter(new CarAdapter(view.getContext(), items));
+        final CarItem[] items01 = (CarItem[]) arguments.getSerializable(ITEMS_API01);
+        final CarItem[] items02 = (CarItem[]) arguments.getSerializable(ITEMS_API02);
+
+        final CarItem[] items = getList(items01, items02);
+
+        listView.setAdapter(new CarAdapter(view.getContext(), items01));
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -90,6 +95,19 @@ public class CarResultFragment extends Fragment {
             }
         });
 
+    }
+
+    private CarItem[] getList(CarItem[] items01, CarItem[] items02) {
+        int size = items01.length + items02.length;
+        CarItem[] items = new CarItem[size];
+        for (int i = 0; i < size; i++) {
+            if (i < items01.length) {
+                items[i] = items01[i];
+            } else {
+                items[i] = items02[i - items01.length];
+            }
+        }
+        return items;
     }
 
     private void selectItem(View view, int position) {

@@ -31,15 +31,15 @@ public class HostelAdapter extends ArrayAdapter<HostelItem> {
         TextView txtvol = itemView.findViewById(R.id.firstLineHostel);
         TextView txtplaces = itemView.findViewById(R.id.secondLinePlacesHostel);
         TextView txtprix = itemView.findViewById(R.id.secondLinePrixHostel);
-        ImageView imageView = itemView.findViewById(R.id.iconCarItem);
-
-        int stars = values[position].getEtoiles();
-        imageView.setImageResource(stars > 2 ? stars == 5 ? R.drawable.ic_hostel_premium : R.drawable.ic_hostel_advanced : R.drawable.ic_hostel_basic);
+        ImageView imageView = itemView.findViewById(R.id.iconHostelItem);
 
         txtDate.setText(values[position].getClasse());
         txtvol.setText(values[position].getNom());
         txtplaces.setText(values[position].getFullAdress());
         txtprix.setText(values[position].getPrix());
+
+        int stars = values[position].getEtoiles();
+        imageView.setImageResource(stars > 2 ? stars == 5 ? R.drawable.ic_hostel_premium : R.drawable.ic_hostel_advanced : R.drawable.ic_hostel_basic);
 
         return itemView;
     }

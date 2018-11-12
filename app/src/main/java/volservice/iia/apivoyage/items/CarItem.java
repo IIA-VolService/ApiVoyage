@@ -19,9 +19,11 @@ public class CarItem implements Serializable {
     private String marque;
     private int type;
     private int id;
+    private EnumAPI api;
 
-    public CarItem(int id, String modele, int prix, Date dateDebut, Date dateFin, int nbPlaces, String loueur, String marque) {
+    public CarItem(int id, EnumAPI enumAPI, String modele, int prix, Date dateDebut, Date dateFin, int nbPlaces, String loueur, String marque) {
         this.id = id;
+        this.api = enumAPI;
         this.modele = modele;
         this.prix = "" + prix;
         this.classe = prix > 50 ? prix > 100 ? "PREMIMUM" : "AFFAIRE" : "ECONONIMQUE";
