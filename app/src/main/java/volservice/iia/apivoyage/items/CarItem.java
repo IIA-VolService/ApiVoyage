@@ -36,7 +36,7 @@ public class CarItem implements Serializable {
             } else calcPx = calcPx.substring(0, 1);
         }
         int pxToCalc = Integer.valueOf(calcPx);
-        this.classe = pxToCalc > 100 ? pxToCalc > 200 ? "PREMIMUM" : "AFFAIRE" : "ECONONIMQUE";
+        this.classe = pxToCalc > 100 ? pxToCalc > 200 ? "PREMIUM" : "AFFAIRE" : "ECONONIMQUE";
         this.type = pxToCalc > 100 ? pxToCalc > 200 ? 1 : 2 : 3;
         this.nbPlaces = String.valueOf(nbPlaces) + (nbPlaces > 1 ? "places" : "place");
         this.localisation = localisation;
@@ -49,7 +49,7 @@ public class CarItem implements Serializable {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        DateFormat formatterDay = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat formatterDay = new SimpleDateFormat("dd-MM-yyyy");
         this.dateDebut = formatterDay.format(dateArr);
         this.dateFin = formatterDay.format(dateRet);
     }
@@ -58,7 +58,7 @@ public class CarItem implements Serializable {
         return modele + " - " + nbPlaces;
     }
 
-    public String getPrix() {
+    public String getFormatPrix() {
         return prix + "€ / jour";
     }
 
@@ -84,5 +84,25 @@ public class CarItem implements Serializable {
 
     public int getId() {
         return id;
+    }
+
+    public String getModele() {
+        return modele;
+    }
+
+    public String getPrix() {
+        return prix;
+    }
+
+    public String getNbPlaces() {
+        return nbPlaces;
+    }
+
+    public String getLocalisation() {
+        return localisation;
+    }
+
+    public EnumAPI getApi() {
+        return api;
     }
 }

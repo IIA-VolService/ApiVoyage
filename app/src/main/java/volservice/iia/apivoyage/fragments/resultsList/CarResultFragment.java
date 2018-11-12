@@ -15,9 +15,17 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+
+import javax.net.ssl.HttpsURLConnection;
+
 import volservice.iia.apivoyage.R;
 import volservice.iia.apivoyage.adapters.CarAdapter;
-import volservice.iia.apivoyage.fragments.FlightFragment;
 import volservice.iia.apivoyage.fragments.MainFragment;
 import volservice.iia.apivoyage.fragments.RentACarFragment;
 import volservice.iia.apivoyage.items.CarItem;
@@ -33,6 +41,7 @@ public class CarResultFragment extends Fragment {
     private Button btnReturn;
     private Button btnValid;
 
+    private CarItem itemSelected;
     private int idItemSelected = -1;
     private View lastViewSelected = null;
 
@@ -50,7 +59,7 @@ public class CarResultFragment extends Fragment {
         listView = view.findViewById(R.id.list_car);
         btnReturn = view.findViewById(R.id.list_return);
         btnValid = view.findViewById(R.id.list_accept);
-        btnValid.setActivated(false);
+        btnValid.setEnabled(false);
 
         btnValid.setText(getString(R.string.txt_btn_select));
         final CarItem[] items01 = (CarItem[]) arguments.getSerializable(ITEMS_API01);
@@ -71,7 +80,7 @@ public class CarResultFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Retour page de sélection
-                Fragment fragment = new MainFragment();
+                Fragment fragment = new RentACarFragment();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction ft = fragmentManager.beginTransaction();
 
@@ -83,10 +92,11 @@ public class CarResultFragment extends Fragment {
         btnValid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Récupérer l'item actuel + le sauvergarder et le transmettre au formulaire client
+                postRequest();
+
 
                 Toast.makeText(v.getContext(), getString(R.string.txt_toast_success), Toast.LENGTH_SHORT).show();
-                Fragment fragment = new RentACarFragment();
+                Fragment fragment = new MainFragment();
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction ft = fragmentManager.beginTransaction();
@@ -96,6 +106,74 @@ public class CarResultFragment extends Fragment {
             }
         });
 
+    }
+
+    private void postRequest() {
+        switch (itemSelected.getApi()) {
+            case API01:
+                postApi01();
+                break;
+
+            case API02:
+                postApi02();
+                break;
+        }
+    }
+
+    private void postApi01() {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("https://192.168.214.23:5001/api/VoitureReservation/Reserver");
+                    HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+                    conn.setRequestMethod("PUT");
+                    conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+                    conn.setDoOutput(true);
+                    conn.setDoInput(true);
+
+                    JSONObject jsonParam = new JSONObject();
+                    jsonParam.put("marque", itemSelected.getMarque());
+                    jsonParam.put("modele", itemSelected.getModele());
+                    jsonParam.put("nbPassager", itemSelected.getNbPlaces());
+                    jsonParam.put("prixReservation", itemSelected.getPrix());
+                    jsonParam.put("localisation", itemSelected.getLocalisation());
+
+                    JSONObject reservations = new JSONObject();
+                    reservations.put("nomResa", "JOE");
+                    reservations.put("prenomResa", "WOLOLO");
+                    reservations.put("numeroPermisResa", "777777777777");
+                    reservations.put("dateDebutReservation", itemSelected.getDateDebut());
+                    reservations.put("dateFinReservation", itemSelected.getDateFin());
+
+                    DataOutputStream os = new DataOutputStream(conn.getOutputStream());
+                    os.writeBytes(jsonParam.toString());
+
+                    os.flush();
+                    os.close();
+
+                    InputStreamReader in = new InputStreamReader(conn.getInputStream());
+
+                    BufferedReader br = new BufferedReader(in);
+                    StringBuilder sb = new StringBuilder();
+                    String line;
+                    while ((line = br.readLine()) != null) {
+                        sb.append(line + "\n");
+                    }
+                    br.close();
+
+                    System.out.println(sb.toString());
+
+                    conn.disconnect();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+    }
+
+    private void postApi02() {
     }
 
     private CarItem[] getList(CarItem[] items01, CarItem[] items02) {
@@ -131,6 +209,7 @@ public class CarResultFragment extends Fragment {
             lastViewSelected = view;
             btnValid.setEnabled(true);
         }
+        itemSelected = idItemSelected != -1 ? ((CarItem) listView.getAdapter().getItem(position)) : null;
         btnValid.invalidate();
     }
 }

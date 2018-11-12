@@ -66,9 +66,7 @@ public class HostelResultFragment extends Fragment {
         listView = view.findViewById(R.id.list_hostel);
         btnReturn = view.findViewById(R.id.list_return);
         btnValid = view.findViewById(R.id.list_accept);
-        btnValid.setActivated(false);
-
-
+        btnValid.setEnabled(false);
         btnValid.setText(getString(R.string.txt_btn_select));
         allItems = (HostelItem[]) arguments.getSerializable(ITEMS);
         listView.setAdapter(new HostelAdapter(view.getContext(), allItems));
@@ -84,7 +82,7 @@ public class HostelResultFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Retour page de sélection
-                Fragment fragment = new MainFragment();
+                Fragment fragment = new HostelFragment();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction ft = fragmentManager.beginTransaction();
 
@@ -136,7 +134,6 @@ public class HostelResultFragment extends Fragment {
                     HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
                     conn.setRequestMethod("PUT");
                     conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-                    conn.setRequestProperty("Accept", "application/json");
                     conn.setDoOutput(true);
                     conn.setDoInput(true);
 

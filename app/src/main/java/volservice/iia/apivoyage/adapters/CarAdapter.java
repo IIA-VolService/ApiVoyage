@@ -39,7 +39,7 @@ public class CarAdapter extends ArrayAdapter {
         txtClasse.setText(values[position].getClasse());
         txtVehicule.setText(values[position].getModeleAndPlaces());
         txtMArque.setText(values[position].getMarque());
-        txtprix.setText(values[position].getPrix());
+        txtprix.setText(values[position].getFormatPrix());
 
         return itemView;
     }
