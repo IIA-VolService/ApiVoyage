@@ -64,7 +64,6 @@ public class RentACarFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         editTextVilleLocation = view.findViewById(R.id.editTextVilleVoiture);
-        editTextAgenceLocation = view.findViewById(R.id.editTextAgenceVoiture);
         editTextDateDebutReservationLocation = view.findViewById(R.id.editTextDebutReservationVoiture);
         editTextDateFinReservationLocation = view.findViewById(R.id.editTextFinReservationVoiture);
         editTextTypeVoiture = view.findViewById(R.id.editTextTypeVoiture);

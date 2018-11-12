@@ -67,7 +67,6 @@
                 android:layout_width="229dp"
                 android:layout_height="40dp"
                 android:hint="Paris"
-                android:hintSize = "15"
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:textSize="15sp" />

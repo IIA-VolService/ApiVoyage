@@ -16,27 +16,22 @@ import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
 import volservice.iia.apivoyage.R;
-import volservice.iia.apivoyage.fragments.resultsList.FlightResultFragment;
 import volservice.iia.apivoyage.fragments.resultsList.HostelResultFragment;
-import volservice.iia.apivoyage.items.FlightItem;
 import volservice.iia.apivoyage.items.HostelItem;
 
 public class HostelFragment extends Fragment {
 
     private EditText editTextPaysHebergement;
     private EditText editTextVilleHebergement;
-    private EditText editTextTypeHebergement;
     private EditText editTextDateDebutReservationHebergement;
     private EditText editTextDateFinReservationHebergement;
     private EditText editTextNbPersonnesHebergement;
@@ -46,7 +41,6 @@ public class HostelFragment extends Fragment {
 
     private String paysHebergement;
     private String villeHebergement;
-    private String typeHebergement;
     private String dateDebutReservationHebergement;
     private String dateFinReservationHebergement;
     private Integer nbPersonnes;
@@ -66,7 +60,6 @@ public class HostelFragment extends Fragment {
 
         editTextPaysHebergement = view.findViewById(R.id.editTextPaysHebergement);
         editTextVilleHebergement = view.findViewById(R.id.editTextVilleHebergement);
-        editTextTypeHebergement = view.findViewById(R.id.editTextTypeHebergement);
         editTextDateDebutReservationHebergement = view.findViewById(R.id.editTextDebutHebergement);
         editTextDateFinReservationHebergement = view.findViewById(R.id.editTextFinHebergement);
         editTextNbPersonnesHebergement = view.findViewById(R.id.editTextNbPersonnesHebergement);
@@ -80,7 +73,6 @@ public class HostelFragment extends Fragment {
             public void onClick(View v) {
                 paysHebergement = editTextPaysHebergement.toString();
                 villeHebergement = editTextVilleHebergement.toString();
-                typeHebergement = editTextTypeHebergement.toString();
                 dateDebutReservationHebergement = editTextDateDebutReservationHebergement.toString();
                 dateFinReservationHebergement = editTextDateFinReservationHebergement.toString();
                 nbPersonnes = !editTextNbPersonnesHebergement.getText().toString().trim().isEmpty() ? (Integer.valueOf(editTextNbPersonnesHebergement.getText().toString())) : -1;
@@ -182,7 +174,7 @@ public class HostelFragment extends Fragment {
 
 
     private boolean checkIfFormIsCorrect() {
-        if (!paysHebergement.isEmpty() && !villeHebergement.isEmpty() && !typeHebergement.isEmpty() && !dateDebutReservationHebergement.isEmpty() && !dateFinReservationHebergement.isEmpty() && nbPersonnes > 0) {
+        if (!paysHebergement.isEmpty() && !villeHebergement.isEmpty() && !dateDebutReservationHebergement.isEmpty() && !dateFinReservationHebergement.isEmpty() && nbPersonnes > 0) {
             return true;
         }
         editTextMessageErreur.setText(getText(R.string.txt_frg_flight_error_champs_invalides));
