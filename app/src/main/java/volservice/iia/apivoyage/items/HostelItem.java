@@ -21,7 +21,20 @@ public class HostelItem implements Serializable {
     private String id;
     private int nbEtoile;
 
-    public HostelItem(String id, String nom, int nbEtoile, double prix, String dateDebut, String dateFin, String adresse, String ville, String pays) {
+    private String description;
+    private String type;
+    private String mail;
+    private String telephone;
+    private Double latitude;
+    private Double longitude;
+
+    public HostelItem(String id, String nom, String description, String type, int nbEtoile, double latitude, double longitude, String telephone, String mail, double prix, String dateDebut, String dateFin, String adresse, String ville, String pays) {
+        this.description = description;
+        this.type = type;
+        this.mail = mail;
+        this.telephone = telephone;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.id = id;
         this.nom = nom;
         this.classe = nbEtoile > 2 ? nbEtoile == 5 ? "LUXE" : "PREMIUM" : "ECONOMIQUE";
@@ -39,7 +52,7 @@ public class HostelItem implements Serializable {
             e.printStackTrace();
         }
 
-        DateFormat formatterDay = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat formatterDay = new SimpleDateFormat("dd-MM-yyyy");
         this.dateDebut = formatterDay.format(dateArr);
         this.dateFin = formatterDay.format(dateRet);
     }
@@ -52,7 +65,7 @@ public class HostelItem implements Serializable {
         return adresse + " " + ville;
     }
 
-    public String getPrix() {
+    public String getFormatPrix() {
         return prix + "€ / nuit";
     }
 
@@ -66,5 +79,57 @@ public class HostelItem implements Serializable {
 
     public String getId() {
         return id;
+    }
+
+    public String getDateDebut() {
+        return dateDebut;
+    }
+
+    public String getDateFin() {
+        return dateFin;
+    }
+
+    public String getPrix() {
+        return prix;
+    }
+
+    public String getAdresse() {
+        return adresse;
+    }
+
+    public String getVille() {
+        return ville;
+    }
+
+    public String getPays() {
+        return pays;
+    }
+
+    public int getNbEtoile() {
+        return nbEtoile;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public String getType() {
+        return type;
     }
 }

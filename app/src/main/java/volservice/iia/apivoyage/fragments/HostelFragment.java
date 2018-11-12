@@ -158,7 +158,13 @@ public class HostelFragment extends Fragment {
             item = new HostelItem(
                     reader.getJSONObject(i).getString("id"),
                     reader.getJSONObject(i).getString("nom"),
+                    reader.getJSONObject(i).getString("description"),
+                    reader.getJSONObject(i).getString("type"),
                     reader.getJSONObject(i).getInt("etoile"),
+                    reader.getJSONObject(i).getDouble("latitude"),
+                    reader.getJSONObject(i).getDouble("longitude"),
+                    reader.getJSONObject(i).getString("telephone"),
+                    reader.getJSONObject(i).getString("mail"),
                     reader.getJSONObject(i).getDouble("prix"),
                     reader.getJSONObject(i).getString("dateDebutBooked"),
                     reader.getJSONObject(i).getString("dateFinBooked"),

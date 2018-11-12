@@ -27,6 +27,7 @@
     <string name="txt_flight_btn_select_aller">Sélectionner aller</string>
     <string name="txt_flight_btn_select_retour">Sélectionner retour</string>
 
+    <string name="txt_btn_valid">Valider</string>
     <string name="txt_btn_select">Réserver</string>
     <string name="txt_btn_back">Retour</string>
 

@@ -36,7 +36,7 @@ public class HostelAdapter extends ArrayAdapter<HostelItem> {
         txtDate.setText(values[position].getClasse());
         txtvol.setText(values[position].getNom());
         txtplaces.setText(values[position].getFullAdress());
-        txtprix.setText(values[position].getPrix());
+        txtprix.setText(values[position].getFormatPrix());
 
         int stars = values[position].getEtoiles();
         imageView.setImageResource(stars > 2 ? stars == 5 ? R.drawable.ic_hostel_premium : R.drawable.ic_hostel_advanced : R.drawable.ic_hostel_basic);

@@ -1,5 +1,6 @@
 package volservice.iia.apivoyage.fragments.resultsList;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -7,13 +8,25 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.Toast;
+
+import org.json.JSONObject;
+
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import volservice.iia.apivoyage.R;
 import volservice.iia.apivoyage.adapters.HostelAdapter;
@@ -37,6 +50,8 @@ public class HostelResultFragment extends Fragment {
     private int idItemSelected = -1;
     private View lastViewSelected = null;
 
+    HostelItem[] allItems;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -53,9 +68,10 @@ public class HostelResultFragment extends Fragment {
         btnValid = view.findViewById(R.id.list_accept);
         btnValid.setActivated(false);
 
+
         btnValid.setText(getString(R.string.txt_btn_select));
-        final HostelItem[] items = (HostelItem[]) arguments.getSerializable(ITEMS);
-        listView.setAdapter(new HostelAdapter(view.getContext(), items));
+        allItems = (HostelItem[]) arguments.getSerializable(ITEMS);
+        listView.setAdapter(new HostelAdapter(view.getContext(), allItems));
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -80,16 +96,8 @@ public class HostelResultFragment extends Fragment {
         btnValid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Récupérer l'item actuel + le sauvergarder et le transmettre au formulaire client
-
-                Toast.makeText(v.getContext(), getString(R.string.txt_toast_success), Toast.LENGTH_SHORT).show();
-                Fragment fragment = new HostelFragment();
-
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction ft = fragmentManager.beginTransaction();
-
-                ft.replace(R.id.screenArea, fragment);
-                ft.commit();
+                sendPost();
+                afterRequest();
             }
         });
 
@@ -118,4 +126,71 @@ public class HostelResultFragment extends Fragment {
         idHostel = idItemSelected != -1 ? ((HostelItem) listView.getAdapter().getItem(position)).getId() : "-1";
         btnValid.invalidate();
     }
+
+    public void sendPost() {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("https://192.168.214.11:5001/api/hebergement/book?token=7woAE69CqstvfvdeFLW8KA==");
+                    HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+                    conn.setRequestMethod("PUT");
+                    conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+                    conn.setRequestProperty("Accept", "application/json");
+                    conn.setDoOutput(true);
+                    conn.setDoInput(true);
+
+                    HostelItem finalItem = null;
+                    for (HostelItem item : allItems) {
+                        if (item.getId().matches(idHostel)) {
+                            finalItem = item;
+                            break;
+                        }
+                    }
+
+                    if (finalItem != null) {
+                        JSONObject jsonParam = new JSONObject();
+                        jsonParam.put("Id", finalItem.getId());
+                        jsonParam.put("Nom", finalItem.getNom());
+                        jsonParam.put("Description", finalItem.getDescription());
+                        jsonParam.put("Latitude", finalItem.getLatitude());
+                        jsonParam.put("Longitude", finalItem.getLongitude());
+                        jsonParam.put("Type", finalItem.getType());
+                        jsonParam.put("Etoile", finalItem.getEtoiles());
+                        jsonParam.put("Adresse", finalItem.getAdresse());
+                        jsonParam.put("Ville", finalItem.getVille());
+                        jsonParam.put("Pays", finalItem.getPays());
+                        jsonParam.put("Telephone", finalItem.getTelephone());
+                        jsonParam.put("Mail", finalItem.getMail());
+                        jsonParam.put("Prix", finalItem.getPrix());
+                        jsonParam.put("DateDebutBooked", finalItem.getDateDebut());
+                        jsonParam.put("DateFinBooked", finalItem.getDateFin());
+
+                        DataOutputStream os = new DataOutputStream(conn.getOutputStream());
+                        //os.writeBytes(URLEncoder.encode(jsonParam.toString(), "UTF-8"));
+                        os.writeBytes(jsonParam.toString());
+
+                        os.flush();
+                        os.close();
+                    }
+                    conn.disconnect();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+    }
+
+    private void afterRequest() {
+        Toast.makeText(this.getContext(), getString(R.string.txt_toast_success), Toast.LENGTH_SHORT).show();
+        Fragment fragment = new HostelFragment();
+
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+
+        ft.replace(R.id.screenArea, fragment);
+        ft.commit();
+    }
+
 }

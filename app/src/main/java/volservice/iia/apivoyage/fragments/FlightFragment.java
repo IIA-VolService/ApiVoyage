@@ -83,7 +83,7 @@ public class FlightFragment extends Fragment {
     }
 
     private boolean askRetour() throws IOException, JSONException {
-        String requestGetVolRetour = "https://192.168.214.14:8890/api_vols/vol/getListVol.php?start=" + lieuArrivee + "&end=" + lieuDepart + "&date=" + dateRetour + "&nbPassager=" + nbPassager + "&classVol=" + classe + "&token=&token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.FgKm8JNIbbmf-KLFZbQI9NGo_3S3NoIjprvPLISlh0c";
+        String requestGetVolRetour = "https://192.168.214.16:8890/api_vols/vol/getListVol.php?start=" + lieuArrivee + "&end=" + lieuDepart + "&date=" + dateRetour + "&nbPassager=" + nbPassager + "&classVol=" + classe + "&token=&token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.FgKm8JNIbbmf-KLFZbQI9NGo_3S3NoIjprvPLISlh0c";
 
         URL url = new URL(requestGetVolRetour);
         HttpsURLConnection cnn = (HttpsURLConnection) url.openConnection();
@@ -109,7 +109,7 @@ public class FlightFragment extends Fragment {
     }
 
     private boolean askAller() throws IOException, JSONException {
-        String requestGetVolAller = "https://192.168.214.14:8890/api_vols/vol/getListVol.php?start=" + lieuDepart + "&end=" + lieuArrivee + "&date=" + dateAller + "&nbPassager=" + nbPassager + "&classVol=" + classe + "&token=&token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.FgKm8JNIbbmf-KLFZbQI9NGo_3S3NoIjprvPLISlh0c";
+        String requestGetVolAller = "https://192.168.214.16:8890/api_vols/vol/getListVol.php?start=" + lieuDepart + "&end=" + lieuArrivee + "&date=" + dateAller + "&nbPassager=" + nbPassager + "&classVol=" + classe + "&token=&token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.FgKm8JNIbbmf-KLFZbQI9NGo_3S3NoIjprvPLISlh0c";
         URL url = new URL(requestGetVolAller);
         HttpsURLConnection cnn = (HttpsURLConnection) url.openConnection();
         cnn.setRequestMethod("GET");

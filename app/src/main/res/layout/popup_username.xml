@@ -49,16 +49,18 @@
             android:singleLine="true"
             android:weightSum="2">
             <Button
+                android:id="@+id/custom_btn_back"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-                android:text="Retour"/>
+                android:text="@string/txt_btn_back"/>
 
             <Button
+                android:id="@+id/custom_btn_valid"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-                android:text="Valider"/>
+                android:text="@string/txt_btn_valid"/>
 
         </LinearLayout>
 
